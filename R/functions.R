@@ -64,11 +64,11 @@ push_data <- function(connectionString
                       ,append = FALSE
                       ,showprogress = FALSE) {
   options(scipen=999)
-  df_name <- paste('', deparse(substitute(df)), '', sep = "")
-  if (!exists(df_name) || !is.data.frame(get(df_name))) {
-    print(paste("data.frame called ", deparse(substitute(df)), " does not exist!", sep = ""))
-    return("Try it again")
-  }
+  # df_name <- paste('', deparse(substitute(df)), '', sep = "")
+  # if (!exists(df_name) || !is.data.frame(get(df_name))) {
+  #   print(paste("data.frame called ", deparse(substitute(df)), " does not exist!", sep = ""))
+  #   return("Try it again")
+  # }
   if (missing(connectionString)) {
     print("Connection string is missing!")
     return("Try it again")
