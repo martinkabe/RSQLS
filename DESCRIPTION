@@ -1,0 +1,18 @@
+Package: RSQLS
+Type: Package
+Title: Package for interactive work with SQL Server
+Version: 0.1.0
+Author: Martin Kovarik
+Maintainer: Martin Kovarik <martiankabe@gmail.com>
+Description: Package for interactive work with SQL Server
+    Usage is:
+    - pulling data from SQL Server
+    - pushing data into SQL Server
+    - retrieving basic info about SQL table
+    - retrieving basic info about SQL database
+    - allows user to create table, drop table, delere rows in table or create new table on SQL Server
+License: GPL-2 | GPL-3
+Imports: data.table
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
