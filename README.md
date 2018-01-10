@@ -38,18 +38,36 @@ install.packages("data.table")
 
 **push_data**
 * Pushing data into SQL Server.
+* Table is automatically created if doesn't exit. 
+* Data types are automatically estimated (Function is able to recognize scientific format and convert to appropriate sql data type - int, float, ... It is also able to distinguish date, datetime format and datetime in ISO format).
+```
+push_data(connectionString, df, sqltabname, append = FALSE, showprogress = FALSE)
+# If append == TRUE then appending new rows into existing SQL table. If append == FALSE then deletes rows in existing SQL table and appends new records.
+```
 
 **pull_data**
 * Pulling data from SQL Server.
+```
+pull_data(connectionString, sqltask, showprogress = FALSE)
+```
 
 **send_SQL_task**
 * Allows user to create table, drop table, delere rows in table or create new table on SQL Server.
+```
+send_SQL_task(connectionString, sqltask)
+```
 
 **get_DB_info**
 * Retrieving basic info about SQL database. Be sure you have a permissions for access to *sys.dm_db_index_usage_stats*
+```
+get_DB_info(connectionString)
+```
 
 **get_table_info**
 * Retrieving basic info about SQL table.
+```
+get_table_info(connectionString, sqltabname)
+```
 
 **Examples**
 * push_data
