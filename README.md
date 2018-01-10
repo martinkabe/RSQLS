@@ -93,12 +93,13 @@ get_DB_info(connString)
 
 * get_table_info
 ```
-get_table_info(connString, "dbo.tableName") # If username and password missing or empty Integrated Security=True is used in connection string instead.
+get_table_info(connString, "dbo.tableName")
 ```
 
 * How to set up connection string
 ```
 # set_connString(datasource, database, usr, pwd)
+# If username and password missing or empty Integrated Security=True is used in connection string instead.
 set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
 ```
 
