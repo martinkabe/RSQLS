@@ -1,4 +1,4 @@
-# RSQLS_package
+# RSQLS package
 Package for interactive work with SQL Server
 
 # RSQLS - Package for interactive work with SQL Server
