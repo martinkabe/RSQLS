@@ -3,12 +3,12 @@ Package for interactive work with SQL Server
 
 # RSQLS - Package for interactive work with SQL Server
 
-Usage is:
-    - pulling data from SQL Server
-    - pushing data into SQL Server
-    - retrieving basic info about SQL table
-    - retrieving basic info about SQL database
-    - allows user to create table, drop table, delere rows in table or create new table on SQL Server
+**Usage is:**
+* pulling data from SQL Server
+* pushing data into SQL Server
+* retrieving basic info about SQL table
+* retrieving basic info about SQL database
+* allows user to create table, drop table, delere rows in table or create new table on SQL Server
 
 ## Getting Started
 
