@@ -104,7 +104,7 @@ set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
 ```
 
 ### Performance testing
-** Pushing data from data.frame/data.table to table on SQL Server (average time in seconds after 3 replications):
+** Pushing data from data.frame/data.table to table on SQL Server (average time in seconds after 3 replications): **
 
 | Rows | Columns | DBI-dbWriteTable | RSQL-push_data | RODBC-sqlSave |
 | :---: | :---: | :---: | :---: | :---: |
@@ -116,7 +116,7 @@ set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
 | 5000000 | 21 | 143.25 | 223.25 | NA |
 | 10000000 | 21 | 262.83 | 415.94 | NA |
 
-** Pulling data from table on SQL Server into data.frame/data.table
+** Pulling data from table on SQL Server into data.frame/data.table **
 
 
 ## Authors
