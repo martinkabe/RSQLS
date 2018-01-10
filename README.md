@@ -88,6 +88,7 @@ set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
 ** Pushing data from data.frame/data.table to table on SQL Server:
 
 | Rows | Columns | DBI-dbWriteTable | RSQL-push_data | RODBC-sqlSave |
+| :---: | :---: | :---: | :---: | :---: |
 | 1000000 | 6 | 16.42 | 15.94 | 319.10 |
 | 5000000 | 6 | 78.69 | 66.23 | 1728.53 |
 | 10000000 | 6 | 155.50 | 126.73 | NA |
