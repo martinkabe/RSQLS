@@ -92,6 +92,7 @@ get_DB_info(connString)
 ```
 
 * get_table_info
+
 *set_connString(datasource, database, usr, pwd)*
 ```
 get_table_info(connString, "dbo.tableName") # If username and password missing or empty Integrated Security=True is used in connection string instead.
