@@ -97,8 +97,8 @@ get_table_info(connString, "dbo.tableName") # If username and password missing o
 ```
 
 * How to set up connection string
-* set_connString(datasource, database, usr, pwd)*
 ```
+# set_connString(datasource, database, usr, pwd)
 set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
 ```
 
