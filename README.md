@@ -109,7 +109,7 @@ Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operatin
 
 * Pushing data from data.frame/data.table to table on SQL Server (average time in seconds after 3 replications) witch mixed data types such as int (mixed with scientific notation), varchar, float, date, datetime in ISO format:
 
-| Rows | Columns | DBI-dbWriteTable | RSQL-push_data | RODBC-sqlSave |
+| Rows | Columns | DBI::dbWriteTable | RSQL::push_data | RODBC::sqlSave |
 | :---: | :---: | :---: | :---: | :---: |
 | 1,000,000 | 6 | 16.42 | 15.94 | 319.10 |
 | 5,000,000 | 6 | 78.69 | 66.23 | 1728.53 |
@@ -121,6 +121,7 @@ Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operatin
 
 * Pulling data from table on SQL Server into data.frame/data.table:
 
+*Approximately the same like DBI::dbFetch and many time faster than RODBC::sqlQuery*
 
 ## Author
 
