@@ -40,7 +40,7 @@ install.packages("data.table")
 **push_data**
 * Pushing data into SQL Server.
 * Table on SQL Server is automatically created if doesn't exit. 
-* Data types are automatically estimated (is able to recognize scientific format and convert to appropriate sql data type - int, float, ... It is also able to distinguish date, datetime format and datetime in ISO format).
+* Data types are automatically estimated (functionality is able to recognize scientific format and convert to appropriate sql data type - int, float, ... It is also able to distinguish date, datetime format and datetime in ISO format).
 ```
 push_data(connectionString, df, sqltabname, append = FALSE, showprogress = FALSE)
 # If append == TRUE then appending new rows into existing SQL table. If append == FALSE then deletes rows in existing SQL table and appends new records.
