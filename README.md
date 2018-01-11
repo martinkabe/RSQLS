@@ -122,7 +122,7 @@ Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operatin
 * Pulling data from table on SQL Server into data.frame/data.table:
 
 
-## Authors
+## Author
 
 * **Martin Kovarik**
 
