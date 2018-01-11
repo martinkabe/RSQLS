@@ -18,7 +18,7 @@ library(devtools)
 install_github("martinkabe/RSQLS_package")
 ```
 *Install package from folder content:*
-* download zip file [RSQLS](https://github.com/martinkabe/RSQLS_package/) - Clone or download
+* download zip file [RSQLS](https://github.com/martinkabe/RSQLS_package/) -> Clone or download -> Download ZIP
 ```
 library(devtools)
 install('/RSQLS/package/diR')
