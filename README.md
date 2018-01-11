@@ -35,11 +35,11 @@ library(RSQLS)
 install.packages("data.table")
 ```
 
-### Basic functions
+### Basic functions - description
 
 **push_data**
 * Pushing data into SQL Server.
-* Table is automatically created if doesn't exit. 
+* Table on SQL Server is automatically created if doesn't exit. 
 * Data types are automatically estimated (Function is able to recognize scientific format and convert to appropriate sql data type - int, float, ... It is also able to distinguish date, datetime format and datetime in ISO format).
 ```
 push_data(connectionString, df, sqltabname, append = FALSE, showprogress = FALSE)
