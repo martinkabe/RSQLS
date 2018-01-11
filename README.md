@@ -70,7 +70,7 @@ get_DB_info(connectionString)
 get_table_info(connectionString, sqltabname)
 ```
 
-**Examples**
+### Examples
 * push_data
 ```
 push_data(connString, dataFrame, "dbo.TableName")
