@@ -119,6 +119,8 @@ Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operatin
 | 5,000,000 | 21 | 143.25 | 223.25 | NA |
 | 10,000,000 | 21 | 262.83 | 415.94 | NA |
 
+DBI::dbWriteTable and RODBC::sqlSave incorrectly classified scientific notation (1e5, 1.45e2, ...) as varchar type. The same situation with datetime in ISO format was classified as varchar. RSQL::push_data correctly classified scientific notation as int or float and datetime in ISO format is correctly datetime data type.
+
 * Pulling data from table on SQL Server into data.frame/data.table:
 
 *Approximately the same like DBI::dbFetch and many time faster than RODBC::sqlQuery*
