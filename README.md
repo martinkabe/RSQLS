@@ -12,7 +12,7 @@ Package for interactive work with SQL Server
 
 ## Getting Started
 
-*Install package github:*
+*Install package directly from github:*
 ```
 library(devtools)
 install_github("martinkabe/RSQLS_package")
