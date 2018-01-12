@@ -12,13 +12,13 @@ Package for interactive work with SQL Server
 
 ## Getting Started
 
-*Install package github:*
+*Install package directly from github:*
 ```
 library(devtools)
-install_github("martinkabe/RSQLS")
+install_github("martinkabe/RSQLS_package")
 ```
 *Install package from folder content:*
-* download zip file [RSQLS](https://github.com/martinkabe/RSQLS_package/) - Clone or download
+* download zip file [RSQLS](https://github.com/martinkabe/RSQLS_package/) -> Clone or download -> Download ZIP
 ```
 library(devtools)
 install('/RSQLS/package/diR')
@@ -28,7 +28,7 @@ library(RSQLS)
 
 ### Prerequisites
 
-* .NET Framework 4.6.1 or newer. How do I check it: [link](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed/)
+* .NET Framework 4.5.1 or newer. How do I check it: [link](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed/)
 * Download R version >= R-3.4.2 [RProject](https://www.r-project.org/)
 * Install data.table package
 ```
@@ -59,7 +59,7 @@ send_SQL_task(connectionString, sqltask)
 ```
 
 **get_DB_info**
-* Retrieving basic info about SQL database. Be sure you have a permissions for access to *sys.dm_db_index_usage_stats*
+* Retrieving basic info about SQL database. Be sure you have a permissions for access to *sys.dm_db_index_usage_stats*: check it with *SELECT * FROM sys.dm_db_index_usage_stats*. If not, contact your SQL Server admin.
 ```
 get_DB_info(connectionString)
 ```
@@ -107,7 +107,7 @@ set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
 ### Performance testing
 Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operating System Windows, SQL Server 2014 Express.
 
-* Pushing data from data.frame/data.table to table on SQL Server (average time in seconds after 3 replications) witch mixed data types such as int (mixed with scientific notation), varchar, float, date, datetime in ISO format:
+* Pushing data from data.frame/data.table to table on SQL Server (average time in seconds after 3 replications) with mixed data types such as int (mixed with scientific notation), varchar, float, date, datetime in ISO format:
 
 | Rows | Columns | DBI::dbWriteTable | RSQL::push_data | RODBC::sqlSave |
 | :---: | :---: | :---: | :---: | :---: |
@@ -118,6 +118,8 @@ Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operatin
 | 1,000,000 | 21 | 27.03 | 49.81 | NA |
 | 5,000,000 | 21 | 143.25 | 223.25 | NA |
 | 10,000,000 | 21 | 262.83 | 415.94 | NA |
+
+DBI::dbWriteTable and RODBC::sqlSave incorrectly classified scientific notation (1e5, 1.45e2, ...) as varchar type. The same situation with datetime in ISO format was classified as varchar in both cases. RSQL::push_data correctly classified scientific notation as int or float and datetime in ISO format is correctly datetime data type.
 
 * Pulling data from table on SQL Server into data.frame/data.table:
 
