@@ -95,7 +95,7 @@ push_data <- function(connectionString
     } else {
       sqltabname_prev <- sqltabname
     }
-    data.table::fwrite(df, paste(pathtocsvfiles,"\\", paste(sqltabname_prev,".csv", sep = ""), sep = ""), row.names = FALSE, sep = "\t")
+    data.table::fwrite(df, paste(pathtocsvfiles,"\\", paste(sqltabname_prev,".csv", sep = ""), sep = ""), row.names = FALSE, sep = "\t", fill = TRUE)
     sql_tab_name <- paste('"', sqltabname, '"', sep = "") # '"dbo.CFTC_Disaggregated_Raw_test"'
     if (append == FALSE) append = 1 else append = 0
     delete_tab <- paste('"', append, '"', sep = "")
@@ -218,6 +218,7 @@ send_SQL_task <- function(connectionString
 #' @examples
 #' get_DB_info(connectionString)
 #' @note How to set up SQL Server connection string see \link{set_connString}.
+#' @note Be sure you have a permissions for access to sys.dm_db_index_usage_stats: check it with SELECT * FROM sys.dm_db_index_usage_stats. If not, contact your SQL Server admin.
 get_DB_info <- function(connectionString) {
   options(scipen=999)
   if (missing(connectionString)) {
