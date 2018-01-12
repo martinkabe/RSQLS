@@ -59,7 +59,7 @@ send_SQL_task(connectionString, sqltask)
 ```
 
 **get_DB_info**
-* Retrieving basic info about SQL database. Be sure you have a permissions for access to *sys.dm_db_index_usage_stats*
+* Retrieving basic info about SQL database. Be sure you have a permissions for access to *sys.dm_db_index_usage_stats*: check it with *SELECT * FROM sys.dm_db_index_usage_stats*
 ```
 get_DB_info(connectionString)
 ```
