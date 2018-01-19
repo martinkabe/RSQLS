@@ -30,10 +30,6 @@ library(RSQLS)
 
 * .NET Framework 4.5.1 or newer. How do I check it: [link](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed/)
 * Download R version >= R-3.4.2 [RProject](https://www.r-project.org/)
-* Install data.table package
-```
-install.packages("data.table")
-```
 
 ### Basic functions - description
 
