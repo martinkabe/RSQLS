@@ -149,8 +149,8 @@ namespace csv_to_sql_loader
             }
             else if (args.Length == 6)
             {
-                string connectionString = args[0]; // "Data Source=LAPTOP-A0UR3NN0\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;"
-                string csvFilePath = args[1]; // "C:\\Users\\Martin\\Documents\\data.csv"
+                string connectionString = args[0]; // "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;"
+                string csvFilePath = args[1]; // "C:\\pathToFile\\data.csv"
                 string tableName = args[2]; // "dbo.DataTable"
                                             // push: push, delete tab, show progress
                                             // pull: pull, sql query, show progress
