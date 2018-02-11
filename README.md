@@ -121,7 +121,7 @@ DBI::dbWriteTable and RODBC::sqlSave incorrectly classified scientific notation 
 
 *Approximately the same like DBI::dbFetch and many time faster than RODBC::sqlQuery*
 
-*Source code for benchmark available at* [RProject](https://github.com/martinkabe/RSQLS/issues/6)
+*Source code for benchmark available at* [link](https://github.com/martinkabe/RSQLS/issues/6)
 
 ## Author
 
