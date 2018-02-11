@@ -1,7 +1,7 @@
 # RSQLS package
-Package for interactive work with SQL Server
+Package for fast interactive work with SQL Server
 
-# RSQLS - Package for interactive work with SQL Server
+# RSQLS - Package for fast interactive work with SQL Server
 
 **Usage is:**
 * pulling data from SQL Server
