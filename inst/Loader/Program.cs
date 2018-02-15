@@ -142,7 +142,7 @@ namespace csv_to_sql_loader
                 }
                 
                 sqltask.Stop();
-                Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMili seconds: {2}",
+                Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                     sqltask.Elapsed.Minutes, sqltask.Elapsed.Seconds, sqltask.Elapsed.TotalMilliseconds);
 
                 Environment.Exit(0);
@@ -342,7 +342,7 @@ namespace csv_to_sql_loader
                             }
                         }
                         push.Stop();
-                        Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMili seconds: {2}",
+                        Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                             push.Elapsed.Minutes, push.Elapsed.Seconds, push.Elapsed.TotalMilliseconds);
                     }
                     else // pull
@@ -363,7 +363,7 @@ namespace csv_to_sql_loader
                         }
 
                         pull.Stop();
-                        Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMili seconds: {2}",
+                        Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                             pull.Elapsed.Minutes, pull.Elapsed.Seconds, pull.Elapsed.TotalMilliseconds);
                     }
 

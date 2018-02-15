@@ -89,7 +89,7 @@ namespace csv_to_sql_loader
             return result;
         }
 
-        public static Int32 maxStringLenght(DataTable dt, int colNumber)
+        public static Int32 maxStringLength(DataTable dt, int colNumber)
         {
             DataColumn dc = dt.Columns[colNumber];
             Int32 maxLength = 0;
@@ -155,7 +155,7 @@ namespace csv_to_sql_loader
                     // else string
                     else
                     {
-                        Int32 varcharLength = maxStringLenght(dt, i);
+                        Int32 varcharLength = maxStringLength(dt, i);
                         sqldatatype_array[0, i] = "varchar(" + varcharLength + ")";
                         sqldatatype_array[1, i] = dt.Columns[i].ToString();
                         continue;
