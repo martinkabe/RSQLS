@@ -85,51 +85,111 @@ namespace csv_to_sql_loader
                 // Implements db info function
                 else if (args[1].ToLower() == "dbinfo")
                 {
-                    string dbinfo_sql = @"select distinct entireView.*,
-                                    case
-	                                    when sys_stats.[last_user_update] is null
-		                                    then st.[modify_date]
-	                                    else sys_stats.[last_user_update]
-                                    end as [LAST_MODIFIED]
-                                    from
-                                    (
-                                    select origTab.[TABLE_SCHEMA],origTab.[TABLE_NAME],origTab.[TABLE_TYPE],origTab.[TABLE_CATALOG],origTab.[ROWS_COUNT],colTab.[COLS_COUNT]
-                                    from
-                                    (
-                                    select isc.[TABLE_NAME], count(distinct [COLUMN_NAME]) [COLS_COUNT],
-                                    'BASE TABLE' [TABLE_TYPE]
-                                    from INFORMATION_SCHEMA.COLUMNS isc
-                                    group by isc.[TABLE_NAME]
-                                    ) colTab
-                                    right join
-                                    (
-                                    select [TABLE_SCHEMA], tbl.name as [TABLE_NAME],[TABLE_TYPE],[TABLE_CATALOG],[rows] as [ROWS_COUNT] from
-                                    (
-                                    select name,id,ist.TABLE_TYPE,ist.TABLE_CATALOG,ist.TABLE_SCHEMA from
-                                    (
-                                    select name, id, case xtype
-	                                    when 'U' then 'BASE TABLE'
-	                                    when 'V' then 'VIEW'
-	                                    end as [TABLE_TYPE]
-                                    from sysobjects
-                                    ) so
-                                    right join INFORMATION_SCHEMA.TABLES ist
-                                    on so.[name]=ist.[TABLE_NAME] and so.[TABLE_TYPE]=ist.[TABLE_TYPE]
-                                    ) as tbl
-                                    left join sysindexes si on tbl.id=si.id
-                                    where si.indid in (0,1) or si.indid is null
-                                    ) origTab
-                                    on origTab.[TABLE_NAME]=colTab.[TABLE_NAME] and origTab.[TABLE_TYPE]=colTab.[TABLE_TYPE]
-                                    ) as entireView
-                                    left join sys.tables st
-                                    on entireView.[TABLE_NAME]=st.name
-                                    left join	(
-				                                    select OBJECT_NAME(OBJECT_ID) AS TableName, [last_user_update]
-				                                    from sys.dm_db_index_usage_stats
-				                                    WHERE database_id = DB_ID(db_name())
-			                                    ) as sys_stats on
-			                                    entireView.[TABLE_NAME]=sys_stats.TableName
-                                    order by entireView.[ROWS_COUNT] desc";
+                    string dbinfo_sql = @"select
+	                                        t2.TABLE_NAME TableName
+	                                        ,t2.TABLE_SCHEMA SchemaName
+	                                        ,t2.rows_count RowsCount
+	                                        ,t2.cols_count ColsCount
+	                                        ,t2.table_type TableType
+	                                        ,t2.table_catalog TableCatalog
+	                                        ,t2.last_modified LastModified
+	                                        ,t1.TotalSpaceKB
+	                                        ,t1.TotalSpaceMB
+	                                        ,cast(t1.TotalSpaceMB/1024.00 as numeric(36,2)) TotalSpaceGB
+	                                        ,t1.UsedSpaceKB
+	                                        ,t1.UsedSpaceMB
+	                                        ,t1.UnusedSpaceKB
+	                                        ,t1.UnusedSpaceMB
+                                        from
+	                                        (
+	                                        select TableName,SchemaName,RowCounts,TotalSpaceKB,TotalSpaceMB,UsedSpaceKB,UsedSpaceMB,UnusedSpaceKB,UnusedSpaceMB from
+	                                        (
+	                                        select
+		                                           tab.*
+		                                           ,ROW_NUMBER() over(partition by schemaname, tablename order by TotalSpaceKB desc) rn
+	                                        from
+	                                        (
+	                                        SELECT
+		                                        t.NAME AS TableName,
+		                                        s.Name AS SchemaName,
+		                                        p.rows AS RowCounts,
+		                                        SUM(a.total_pages) * 8 AS TotalSpaceKB, 
+		                                        CAST(ROUND(((SUM(a.total_pages) * 8) / 1024.00), 2) AS NUMERIC(36, 2)) AS TotalSpaceMB,
+		                                        SUM(a.used_pages) * 8 AS UsedSpaceKB, 
+		                                        CAST(ROUND(((SUM(a.used_pages) * 8) / 1024.00), 2) AS NUMERIC(36, 2)) AS UsedSpaceMB, 
+		                                        (SUM(a.total_pages) - SUM(a.used_pages)) * 8 AS UnusedSpaceKB,
+		                                        CAST(ROUND(((SUM(a.total_pages) - SUM(a.used_pages)) * 8) / 1024.00, 2) AS NUMERIC(36, 2)) AS UnusedSpaceMB
+	                                        FROM 
+		                                        sys.tables t
+	                                        INNER JOIN      
+		                                        sys.indexes i ON t.OBJECT_ID = i.object_id
+	                                        INNER JOIN 
+		                                        sys.partitions p ON i.object_id = p.OBJECT_ID AND i.index_id = p.index_id
+	                                        INNER JOIN 
+		                                        sys.allocation_units a ON p.partition_id = a.container_id
+	                                        LEFT OUTER JOIN 
+		                                        sys.schemas s ON t.schema_id = s.schema_id
+	                                        GROUP BY 
+		                                        t.Name, s.Name, p.Rows
+	                                        ) tab
+	                                        ) result
+	                                        where rn = 1
+	                                        ) t1
+	                                        right join
+	                                        (
+	                                        -- part 2
+	                                        select * from
+	                                        (
+	                                        select distinct entireView.*
+		                                        ,case
+			                                        when sys_stats.[last_user_update] is null
+				                                        then st.[modify_date]
+			                                        else sys_stats.[last_user_update]
+		                                        end as [LAST_MODIFIED]
+		                                        ,row_number() over(partition by entireView.[TABLE_SCHEMA],entireView.[TABLE_NAME] order by entireView.[ROWS_COUNT] desc) rn
+	                                        from
+		                                        (
+		                                        select origTab.[TABLE_SCHEMA],origTab.[TABLE_NAME],origTab.[TABLE_TYPE],origTab.[TABLE_CATALOG],origTab.[ROWS_COUNT],colTab.[COLS_COUNT]
+			                                        from
+			                                        (
+			                                        select isc.[TABLE_NAME], count(distinct [COLUMN_NAME]) [COLS_COUNT],
+			                                        'BASE TABLE' [TABLE_TYPE]
+			                                        from INFORMATION_SCHEMA.COLUMNS isc
+			                                        group by isc.[TABLE_NAME]
+			                                        ) colTab
+			                                        right join
+			                                        (
+			                                        select [TABLE_SCHEMA], tbl.name as [TABLE_NAME],[TABLE_TYPE],[TABLE_CATALOG],[rows] as [ROWS_COUNT] from
+			                                        (
+			                                        select name,id,ist.TABLE_TYPE,ist.TABLE_CATALOG,ist.TABLE_SCHEMA from
+			                                        (
+			                                        select name, id, case xtype
+				                                        when 'U' then 'BASE TABLE'
+				                                        when 'V' then 'VIEW'
+				                                        end as [TABLE_TYPE]
+			                                        from sysobjects
+			                                        ) so
+			                                        right join INFORMATION_SCHEMA.TABLES ist
+			                                        on so.[name]=ist.[TABLE_NAME] and so.[TABLE_TYPE]=ist.[TABLE_TYPE]
+			                                        ) as tbl
+			                                        left join sysindexes si on tbl.id=si.id
+			                                        where si.indid in (0,1) or si.indid is null
+			                                        ) origTab
+			                                        on origTab.[TABLE_NAME]=colTab.[TABLE_NAME] and origTab.[TABLE_TYPE]=colTab.[TABLE_TYPE]
+			                                        ) as entireView
+			                                        left join sys.tables st
+			                                        on entireView.[TABLE_NAME]=st.name
+			                                        left join	(
+							                                        select OBJECT_NAME(OBJECT_ID) AS TableName, [last_user_update]
+							                                        from sys.dm_db_index_usage_stats
+							                                        WHERE database_id = DB_ID(db_name())
+						                                        ) as sys_stats on
+						                                        entireView.[TABLE_NAME]=sys_stats.TableName
+			                                        ) tab
+		                                        where rn = 1
+		                                        ) t2
+		                                        on t1.tablename=t2.TABLE_NAME and t1.schemaname=t2.TABLE_SCHEMA
+		                                        order by t2.TABLE_NAME";
                     Functions.WriteFromDBToCSV(dbinfo_sql, args[2], false, args[0]);
                     Console.WriteLine("Basic info about database has been created.");
                     Environment.Exit(0);
