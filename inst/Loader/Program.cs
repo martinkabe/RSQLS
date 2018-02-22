@@ -88,8 +88,8 @@ namespace csv_to_sql_loader
                     string dbinfo_sql = @"select
 	                                        t2.TABLE_NAME TableName
 	                                        ,t2.TABLE_SCHEMA SchemaName
-	                                        ,t2.rows_count RowsCount
-	                                        ,t2.cols_count ColsCount
+	                                        ,t1.RowCounts
+						,t2.cols_count ColCounts
 	                                        ,t2.table_type TableType
 	                                        ,t2.table_catalog TableCatalog
 	                                        ,t2.last_modified LastModified
