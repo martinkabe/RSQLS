@@ -85,11 +85,11 @@ namespace csv_to_sql_loader
                 // Implements db info function
                 else if (args[1].ToLower() == "dbinfo")
                 {
-                    string dbinfo_sql = @"select
+                    string dbinfo_sql = @"SELECT
 	                                        t2.TABLE_NAME TableName
 	                                        ,t2.TABLE_SCHEMA SchemaName
 	                                        ,t1.RowCounts
-						,t2.cols_count ColCounts
+	                                        ,t2.cols_count ColCounts
 	                                        ,t2.table_type TableType
 	                                        ,t2.table_catalog TableCatalog
 	                                        ,t2.last_modified LastModified
@@ -102,12 +102,12 @@ namespace csv_to_sql_loader
 	                                        ,t1.UnusedSpaceMB
                                         from
 	                                        (
-	                                        select TableName,SchemaName,RowCounts,TotalSpaceKB,TotalSpaceMB,UsedSpaceKB,UsedSpaceMB,UnusedSpaceKB,UnusedSpaceMB from
+	                                        SELECT TableName,SchemaName,RowCounts,TotalSpaceKB,TotalSpaceMB,UsedSpaceKB,UsedSpaceMB,UnusedSpaceKB,UnusedSpaceMB from
 	                                        (
-	                                        select
+	                                        SELECT
 		                                           tab.*
-		                                           ,ROW_NUMBER() over(partition by schemaname, tablename order by TotalSpaceKB desc) rn
-	                                        from
+		                                           ,ROW_NUMBER() OVER(PARTITION BY schemaname, tablename ORDER BY TotalSpaceKB desc) rn
+	                                        FROM
 	                                        (
 	                                        SELECT
 		                                        t.NAME AS TableName,
@@ -138,9 +138,9 @@ namespace csv_to_sql_loader
 	                                        right join
 	                                        (
 	                                        -- part 2
-	                                        select * from
+	                                        SELECT * from
 	                                        (
-	                                        select distinct entireView.*
+	                                        SELECT distinct entireView.*
 		                                        ,case
 			                                        when sys_stats.[last_user_update] is null
 				                                        then st.[modify_date]
@@ -149,25 +149,25 @@ namespace csv_to_sql_loader
 		                                        ,row_number() over(partition by entireView.[TABLE_SCHEMA],entireView.[TABLE_NAME] order by entireView.[ROWS_COUNT] desc) rn
 	                                        from
 		                                        (
-		                                        select origTab.[TABLE_SCHEMA],origTab.[TABLE_NAME],origTab.[TABLE_TYPE],origTab.[TABLE_CATALOG],origTab.[ROWS_COUNT],colTab.[COLS_COUNT]
+		                                        SELECT origTab.[TABLE_SCHEMA],origTab.[TABLE_NAME],origTab.[TABLE_TYPE],origTab.[TABLE_CATALOG],origTab.[ROWS_COUNT],colTab.[COLS_COUNT]
 			                                        from
 			                                        (
-			                                        select isc.[TABLE_NAME], count(distinct [COLUMN_NAME]) [COLS_COUNT],
+			                                        SELECT isc.[TABLE_NAME], count(distinct [COLUMN_NAME]) [COLS_COUNT],
 			                                        'BASE TABLE' [TABLE_TYPE]
 			                                        from INFORMATION_SCHEMA.COLUMNS isc
 			                                        group by isc.[TABLE_NAME]
 			                                        ) colTab
 			                                        right join
 			                                        (
-			                                        select [TABLE_SCHEMA], tbl.name as [TABLE_NAME],[TABLE_TYPE],[TABLE_CATALOG],[rows] as [ROWS_COUNT] from
+			                                        SELECT [TABLE_SCHEMA], tbl.name as [TABLE_NAME],[TABLE_TYPE],[TABLE_CATALOG],[rows] as [ROWS_COUNT] from
 			                                        (
-			                                        select name,id,ist.TABLE_TYPE,ist.TABLE_CATALOG,ist.TABLE_SCHEMA from
+			                                        SELECT name,id,ist.TABLE_TYPE,ist.TABLE_CATALOG,ist.TABLE_SCHEMA from
 			                                        (
-			                                        select name, id, case xtype
+			                                        SELECT name, id, case xtype
 				                                        when 'U' then 'BASE TABLE'
 				                                        when 'V' then 'VIEW'
 				                                        end as [TABLE_TYPE]
-			                                        from sysobjects
+			                                        FROM sysobjects
 			                                        ) so
 			                                        right join INFORMATION_SCHEMA.TABLES ist
 			                                        on so.[name]=ist.[TABLE_NAME] and so.[TABLE_TYPE]=ist.[TABLE_TYPE]

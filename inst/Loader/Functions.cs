@@ -15,7 +15,15 @@ using System.Threading.Tasks;
 namespace csv_to_sql_loader
 {
     public static class Functions
-    {   
+    {
+        /// <summary>
+        ///  Global variables for code below: input files, ftp/sql connection strings
+        /// </summary>
+        // public static string conStringName = ReturnConStringName();
+        // public static string sqldbconnection = System.Configuration.ConfigurationManager.ConnectionStrings[conStringName].ConnectionString;
+
+        // based on app approval output file columns
+        
         public static void InsertDataIntoSQLServerUsingSQLBulkCopy_2(DataTable dtable, string sqlTableName, Int32 batch_size, string connString)
         {
             try
@@ -29,6 +37,9 @@ namespace csv_to_sql_loader
                         // Write from the source to the destination.
                         bulkCopy.BulkCopyTimeout = 0;
                         bulkCopy.BatchSize = batch_size;
+                        // Set up the event handler to notify after 50 rows.
+                        // bulkCopy.SqlRowsCopied += new SqlRowsCopiedEventHandler(OnSqlRowsCopied);
+                        // bulkCopy.NotifyAfter = 10000;
                         bulkCopy.WriteToServer(dtable);
                     }
                     catch (SqlException ex)
@@ -195,6 +206,7 @@ namespace csv_to_sql_loader
                 string str1 = string.Empty;
                 int dt_rows_count = dataTypes.Rows.Count;
 
+                // char sep = get_sep(strFilePath, dataTypes);
                 char sep = '\t';
 
                 using (StreamReader sr = new StreamReader(strFilePath))
@@ -213,6 +225,7 @@ namespace csv_to_sql_loader
                     for (int i = 0; i < dt_rows_count; i++)
                     {
                         DataRow drh = dataTypes.Rows[i];
+                        //if (!headers[i].ToString().Contains(drh.ItemArray[0].ToString()))
                         if (headers[i].ToString().Replace("\"", "") != drh.ItemArray[0].ToString())
                         {
                             Console.WriteLine("You need to reorder columns in your csv according to columns in table " + tabName + "!!!");
@@ -279,6 +292,7 @@ namespace csv_to_sql_loader
                             if (showprogress) { Console.WriteLine("Flushing " + flushed_batch_size + " rows (" + (rowsCount + 1) + " records already imported)"); }
                         }
                         rowsCount += 1;
+                        // rowCounter++;
                     }
                     InsertDataIntoSQLServerUsingSQLBulkCopy_2(dt, tabName, flushed_batch_size, connString);
                     dt.Rows.Clear();
@@ -319,7 +333,7 @@ namespace csv_to_sql_loader
                                             c.[scale],
                                             c.is_nullable,
                                             ISNULL(i.is_primary_key, 0) 'Primary Key',
-	                                        ROW_NUMBER() over(ORDER BY (SELECT NULL)) r_number
+	                                        ROW_NUMBER() OVER(ORDER BY (SELECT NULL)) r_number
                                         FROM    
                                             sys.columns c
                                         INNER JOIN 
@@ -347,6 +361,25 @@ namespace csv_to_sql_loader
             return table;
         }
 
+        public static char get_sep(string strFilePath, DataTable dt)
+        {
+            char sep;
+            using (StreamReader sr = new StreamReader(strFilePath))
+            {
+                IList<char> seps = new List<char>() { '\t', ',', '.', ';'};
+                sep = Convert.ToChar(AutoDetectCsvSeparator.Detect(sr, dt.Rows.Count*10000, seps).ToString());
+
+                if (sep != '\t')
+                {
+                    Console.WriteLine("Try to reduce '"+ sep + "' in your data.frame or data.table you are trying to push to SQL Server,\nbecause tabulator is used as a separator!");
+                    Console.WriteLine("Use something like gsub('"+ sep + "', ' ', df.column) in R");
+                    Environment.Exit(0);
+                }
+
+            }
+            return sep;
+        }
+
         public static bool IfSQLTableExists(string tabname, string connString)
         {
             bool exists = false;
@@ -356,7 +389,7 @@ namespace csv_to_sql_loader
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     con.Open();
-                    using (SqlCommand command = new SqlCommand("select case when exists((select * from information_schema.tables where TABLE_SCHEMA + '.' + table_name = '" + tabname + "' OR table_name = '" + tabname + "')) then 1 else 0 end", con))
+                    using (SqlCommand command = new SqlCommand("SELECT CASE WHEN EXISTS((SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA + '.' + TABLE_NAME = '" + tabname + "' OR TABLE_NAME = '" + tabname + "')) THEN 1 ELSE 0 END", con))
                     {
                         command.CommandTimeout = 0;
                         exists = (int)command.ExecuteScalar() == 1;
@@ -406,6 +439,7 @@ namespace csv_to_sql_loader
         }
 
         // Write data into csv:
+        // https://social.msdn.microsoft.com/Forums/vstudio/en-US/8ef26d1e-b0a4-4cdc-ad0a-5dd7a7bcd333/large-csv-file-creator-in-c?forum=csharpgeneral
         public static void WriteFromDBToCSV(string sql_query, string csvpath, bool showprogress, string connString)
         {
             // DataTable dataTable = new DataTable();
@@ -428,6 +462,13 @@ namespace csv_to_sql_loader
                         {
                             dataTable = GetDataTableFromDataReader(rdr);
                         }
+                        //IDataReader rdr = new SqlCommand(sql_query, con).ExecuteReader(CommandBehavior.CloseConnection);
+                        //dataTable = GetDataTableFromDataReader(rdr);
+                        //rdr = null;
+
+                        //SqlDataAdapter da = new SqlDataAdapter(command);
+                        //if (showprogress) { Console.WriteLine("Downloading data from sql server and pushing into DataTable object"); }
+                        //da.Fill(dataTable);
 
                         if (showprogress) { Console.WriteLine("Pushing data from DataTable object into StringBuilder"); }
 
@@ -504,6 +545,8 @@ namespace csv_to_sql_loader
                             File.AppendAllText(csvpath, sb.ToString());
                         }
                         Console.WriteLine(counter + " records written into DataFrame/DataTable.");
+                        // if (showprogress) { Console.WriteLine("Writing from StringBuilder into csv file."); }
+                        // File.WriteAllText(csvpath, sb.ToString());
                     }
                     con.Close();
                 }
@@ -519,6 +562,8 @@ namespace csv_to_sql_loader
             char separator;
             using (StreamReader sr = new StreamReader(pathtocsv))
             {
+                // IList<char> seps = new List<char>() { '\t', ',', '.', ';' };
+                //separator = Convert.ToChar(AutoDetectCsvSeparator.Detect(sr, 100000, seps).ToString());
                 separator = '\t';
             }
             string[,] sqldts = DataTypeIdentifier.SQLDataTypes(pathtocsv, rowstoestimatedatatype, separator);
