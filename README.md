@@ -36,7 +36,7 @@ library(RSQLS)
 
 **push_data**
 * Pushing data into SQL Server.
-* Table on SQL Server is automatically created if doesn't exit. 
+* Table on SQL Server is automatically created if doesn't exist. 
 * Data types are automatically estimated (functionality is able to recognize scientific format and convert to appropriate sql data type - int, float, decimal, ... It is also able to distinguish date, datetime format and datetime in ISO format).
 ```
 push_data(connectionString, df, sqltabname, append = FALSE, showprogress = FALSE)
