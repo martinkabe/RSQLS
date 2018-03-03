@@ -98,7 +98,9 @@ get_table_info(connString, "dbo.tableName")
 ```
 # set_connString(datasource, database, usr, pwd)
 # If username and password missing or empty Integrated Security=True is used in connection string instead.
-set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
+connString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name")
+# Connection string with username and password:
+connString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name", usr = "username", pwd = "password")
 ```
 
 ### Performance testing
