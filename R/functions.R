@@ -81,6 +81,7 @@ push_data <- function(connectionString
   if (!endsWith(pathtocsvfiles, "\\")) {
     pathtocsvfiles <- paste(pathtocsvfiles,"\\", sep = "")
   }
+
   if (missing(sqltabname)) {
     print("SQL table name is missing!")
     return("Try it again")
@@ -89,9 +90,9 @@ push_data <- function(connectionString
     print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", " No inserted record into table ", sqltabname, sep = ""))
   } else {
     print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", sep = ""))
-    sqltabname <- gsub("\\[|\\]", "", sqltabname)
+    # sqltabname <- gsub("\\[|\\]", "", sqltabname)
     if (length(strsplit(sqltabname,"\\.")[[1]]) > 1) {
-      sqltabname_prev <- gsub("^[^.]*.", "", sqltabname)
+      sqltabname_prev <- gsub("\\[|\\]", "", gsub("^[^.]*.", "", sqltabname))
     } else {
       sqltabname_prev <- sqltabname
     }
@@ -284,9 +285,9 @@ get_table_info <- function(connectionString
     print("SQL table name is missing!")
     return("Try it again")
   }
-  sqltabname <- gsub("\\[|\\]", "", sqltabname)
+  # sqltabname <- gsub("\\[|\\]", "", sqltabname)
   if (length(strsplit(sqltabname,"\\.")[[1]]) > 1) {
-    sqltabname_prev <- gsub("^[^.]*.", "", sqltabname)
+    sqltabname_prev <- gsub("\\[|\\]", "", gsub("^[^.]*.", "", sqltabname))
   } else {
     sqltabname_prev <- sqltabname
   }
