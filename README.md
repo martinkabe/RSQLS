@@ -30,7 +30,7 @@ library(RSQLS)
 
 * Windows OS
 * .NET Framework 4.5.1 or newer. How do I check it: [link](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed/)
-* Download R version >= R-3.4.2 [RProject](https://www.r-project.org/)
+* R Version R-3.4.2 or newer. Available at: [RProject](https://www.r-project.org/)
 
 ### Basic functions - description
 
@@ -39,32 +39,32 @@ library(RSQLS)
 * Table on SQL Server is automatically created if doesn't exist. 
 * Data types are automatically estimated (functionality is able to recognize scientific format and convert to appropriate sql data type - int, float, decimal, ... It is also able to distinguish date, datetime format and datetime in ISO format).
 ```
-push_data(connectionString, df, sqltabname, append = FALSE, showprogress = FALSE)
+push_data(connString, df, sqltabname, append = FALSE, showprogress = FALSE)
 # If append == TRUE then appending new rows into existing SQL table. If append == FALSE then deletes rows in existing SQL table and appends new records.
 ```
 
 **pull_data**
 * Pulling data from SQL Server.
 ```
-pull_data(connectionString, sqltask, showprogress = FALSE)
+pull_data(connString, sqltask, showprogress = FALSE)
 ```
 
 **send_SQL_task**
 * Allows user to create table, drop table, delere rows in table or create new table on SQL Server.
 ```
-send_SQL_task(connectionString, sqltask)
+send_SQL_task(connString, sqltask)
 ```
 
 **get_DB_info**
 * Retrieving basic info about SQL database. Be sure you have a permissions for access to *sys.dm_db_index_usage_stats*: check it with *SELECT * FROM sys.dm_db_index_usage_stats*. If not, contact your SQL Server admin.
 ```
-get_DB_info(connectionString)
+get_DB_info(connString)
 ```
 
 **get_table_info**
 * Retrieving basic info about SQL table.
 ```
-get_table_info(connectionString, sqltabname)
+get_table_info(connString, sqltabname)
 ```
 
 ### Examples
@@ -98,7 +98,9 @@ get_table_info(connString, "dbo.tableName")
 ```
 # set_connString(datasource, database, usr, pwd)
 # If username and password missing or empty Integrated Security=True is used in connection string instead.
-set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
+connString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name")
+# Connection string with username and password:
+connString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name", usr = "username", pwd = "password")
 ```
 
 ### Performance testing
@@ -118,7 +120,7 @@ Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operatin
 
 DBI::dbWriteTable and RODBC::sqlSave incorrectly classified scientific notation (1e5, 1.45e2, ...) as varchar type. The same situation with datetime in ISO format was classified as varchar in both cases. RSQLS::push_data correctly classified scientific notation as int or float and datetime in ISO format is correctly datetime data type.
 
-*Source code for benchmark available at* [link](https://github.com/martinkabe/RSQLS/issues/6)
+*Source code for benchmark is available at* [link](https://github.com/martinkabe/RSQLS/issues/6)
 
 * Pulling data from table on SQL Server into data.frame/data.table:
 
