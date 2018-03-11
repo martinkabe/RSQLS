@@ -11,6 +11,14 @@ namespace csv_to_sql_loader
 {
     public static class CSVReader
     {
+        /// <summary>
+        /// Store csv file into data table
+        /// </summary>
+        /// <param name="pathToCSV">Determine path to csv file stored on disk</param>
+        /// <param name="countRowsToBeStored">How many rows should be stored into data table from csv file</param>
+        /// <param name="sep">Separator for columns delimited</param>
+        /// <returns></returns>
+
         public static DataTable csvToDataTable(string pathToCSV, Int32 countRowsToBeStored, char sep)
         {
             DataTable dtCsv = new DataTable();
@@ -61,7 +69,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
             return dtCsv;
         }

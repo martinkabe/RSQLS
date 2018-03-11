@@ -65,21 +65,21 @@ namespace csv_to_sql_loader
                             Console.WriteLine("Table " + sqlTableName + " already exists in DB, just change data type - see the tip below.");
                             Console.WriteLine("Tip: try something like ALTER TABLE table_name ALTER COLUMN column_name datatype;");
                             CleanUpTable(sqlTableName, connString);
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message.ToString());
                         CleanUpTable(sqlTableName, connString);
-                        Environment.Exit(0);
+                        Environment.Exit(1);
                     }
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
         }
         
@@ -120,7 +120,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
         }
 
@@ -144,7 +144,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
         }
 
@@ -167,7 +167,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
         }
         
@@ -189,7 +189,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
 
             return name;
@@ -218,7 +218,7 @@ namespace csv_to_sql_loader
                         Console.WriteLine("CSV file has different count of columns than table " + tabName + "!!!");
                         Console.WriteLine("Data Frame has " + headers.Length + " columns and table on SQL Server has " + dt_rows_count + " columns!");
                         Console.WriteLine("Tip: Try also check '" + sep + "' somewhere in the text in your DataFrame or DataTable you are trying to push to SQL Server,\nbecause tabulator is used as a separator!");
-                        Environment.Exit(0);
+                        Environment.Exit(1);
                     }
 
                     // Compare header - CSV vs DataTable
@@ -230,7 +230,7 @@ namespace csv_to_sql_loader
                         {
                             Console.WriteLine("You need to reorder columns in your csv according to columns in table " + tabName + "!!!");
                             Console.WriteLine("Column " + headers[i].ToString().Replace("\"", "") + " in your data.table or data.frame\ndoesn't correspond with column " + drh.ItemArray[0].ToString() + " defined in table " + tabName);
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                     }
 
@@ -303,7 +303,7 @@ namespace csv_to_sql_loader
             {
                 Console.WriteLine(fex.Message.ToString());
                 Console.WriteLine("Tip: there might be string between numeric data or the most likely escape character in string.\r\nCheck also scientific notation considered as string.");
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
             catch (Exception ex)
             {
@@ -356,7 +356,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
             return table;
         }
@@ -373,7 +373,7 @@ namespace csv_to_sql_loader
                 {
                     Console.WriteLine("Try to reduce '"+ sep + "' in your data.frame or data.table you are trying to push to SQL Server,\nbecause tabulator is used as a separator!");
                     Console.WriteLine("Use something like gsub('"+ sep + "', ' ', df.column) in R");
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
 
             }
@@ -400,12 +400,12 @@ namespace csv_to_sql_loader
             catch (InvalidOperationException ioe)
             {
                 Console.WriteLine("Invalid Operation Exception: " + ioe.Message.ToString() + "\nSomething is wrong with your connection string! You might check back slashes!");
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
             return (exists);
         }
@@ -554,7 +554,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
         }
         public static void CreateSQLTable(string pathtocsv, Int32 rowstoestimatedatatype, string tablename, string connstring)
@@ -598,7 +598,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
         }
         public static Tuple<bool, string> IsServerConnected(string connectionString)

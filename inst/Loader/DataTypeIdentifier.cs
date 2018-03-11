@@ -10,6 +10,14 @@ namespace csv_to_sql_loader
 {
     public static class DataTypeIdentifier
     {
+        /// <summary>
+        /// Gets the datatype for the Datacolumn column
+        /// </summary>
+        /// <param name="column">Datacolumn to get datatype of</param>
+        /// <param name="dt">DataTable to get datatype from</param>
+        /// <param name="colSize">ref value to return size for string type</param>
+        /// <returns></returns>
+
         // check double type
         public static bool IsDoubleType(DataTable dt, int colNumber)
         {
@@ -109,6 +117,7 @@ namespace csv_to_sql_loader
         // Return sql data types:
         public static string[,] SQLDataTypes(string pathtocsv, Int32 norowsreview, char sep)
         {
+            // "c:\\PathToFile\\data.csv"
             DataTable dt = CSVReader.csvToDataTable(pathtocsv, norowsreview, sep);
             string[,] sqldatatype_array = new string[2, dt.Columns.Count];
 
@@ -165,7 +174,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
             return sqldatatype_array;
         }

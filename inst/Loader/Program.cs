@@ -11,7 +11,7 @@ namespace csv_to_sql_loader
 {
     class Program
     {
-        static int Main(string[] args)
+        static void Main(string[] args)
         {
             // https://gallery.technet.microsoft.com/scriptcenter/Import-Large-CSVs-into-SQL-216223d9
 
@@ -37,7 +37,7 @@ namespace csv_to_sql_loader
             if (!isConnected.Item1)
             {
                 Console.WriteLine(isConnected.Item2);
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
 
             Console.WriteLine();
@@ -48,7 +48,7 @@ namespace csv_to_sql_loader
                 // SELECT is not allowed for this type of function
                 if (args[1].ToLower().Contains("select")) { Console.WriteLine("You can CREATE, DELETE or DROP table.\nIf you want return something from DB, use parametrized version: pull_data(connectionString = , sqltask = , showprogress = FALSE)!\nPlease, see the documentation!"); }
                 Functions.SQLQueryTask(args[1], args[0]);
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
 
             else if (args.Length == 4)
@@ -64,12 +64,12 @@ namespace csv_to_sql_loader
                 {
                     Functions.DropTable(args[3], args[0]);
                     Console.WriteLine("Table " + args[3] + " has been deleted.");
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
                 // Implements table info function
                 else if (args[1].ToLower() == "tableinfo")
                 {
-                    if (!Functions.IfSQLTableExists(args[3], args[0])) { Console.WriteLine("Table " + args[3] + " doesn't exist."); Environment.Exit(0); }
+                    if (!Functions.IfSQLTableExists(args[3], args[0])) { Console.WriteLine("Table " + args[3] + " doesn't exist."); Environment.Exit(1); }
                     string tableinfo_sql = @"SELECT [Column Name],[Data type],[Max Length],[precision],[scale],[is_nullable],[Primary Key]
                                         FROM
                                         (
@@ -99,7 +99,7 @@ namespace csv_to_sql_loader
 
                     Functions.WriteFromDBToCSV(tableinfo_sql, args[2], false, args[0]);
                     Console.WriteLine("Basic info about table " + args[3] + " has been created.");
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
                 // Implements db info function
                 else if (args[1].ToLower() == "dbinfo")
@@ -211,20 +211,19 @@ namespace csv_to_sql_loader
 		                                        order by t2.TABLE_NAME";
                     Functions.WriteFromDBToCSV(dbinfo_sql, args[2], false, args[0]);
                     Console.WriteLine("Basic info about database has been created.");
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
                 // Another SQL query task
                 else
                 {
                     Console.WriteLine("Not sure what you are trying to achieve... Please, read the documentation!");
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
                 
                 sqltask.Stop();
                 Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                     sqltask.Elapsed.Minutes, sqltask.Elapsed.Seconds, sqltask.Elapsed.TotalMilliseconds);
-
-                Environment.Exit(0);
+                Environment.Exit(1);
             }
             else if (args.Length == 6)
             {
@@ -246,7 +245,7 @@ namespace csv_to_sql_loader
                 {
                     //foreach (var item in args)
                     //{
-                    //    if (item == null | item == string.Empty | item == "") { Console.WriteLine("No of arguments shouldn't be empty!"); Environment.Exit(0); }
+                    //    if (item == null | item == string.Empty | item == "") { Console.WriteLine("No of arguments shouldn't be empty!"); Environment.Exit(1); }
                     //}
 
                     if (push_or_pull_1.ToLower() == "push")
@@ -254,14 +253,14 @@ namespace csv_to_sql_loader
                         if (args.Length != 6)
                         {
                             Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, push, remove tab (0/1), show progress (0/1)!");
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                         // handle for remove tab and show progress
                         string[] possible_vals = { "0", "1" };
                         if (!possible_vals.Contains(push_or_pull_2) | !possible_vals.Contains(push_or_pull_3))
                         {
                             Console.WriteLine("Remove tab and show progress arguments should be 1 or 0!");
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                     }
                     else if (push_or_pull_1.ToLower() == "pull")
@@ -269,7 +268,7 @@ namespace csv_to_sql_loader
                         if (args.Length != 6)
                         {
                             Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, pull, sql query, show progress (0/1)!");
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                         // handle sql query
                         if (push_or_pull_2.ToLower().Contains("delete") |
@@ -278,7 +277,7 @@ namespace csv_to_sql_loader
                             push_or_pull_2.ToLower().Contains("update"))
                         {
                             Console.WriteLine("Only SELECT statement is allowed");
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
 
                         // handle show progress
@@ -286,19 +285,19 @@ namespace csv_to_sql_loader
                         if (!possible_vals.Contains(push_or_pull_3))
                         {
                             Console.WriteLine("Show progress argument should be 1 or 0!");
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                     }
                     else
                     {
                         Console.WriteLine("Have no idea what " + push_or_pull_1.ToLower() + " is. program knows only push or pull as a first argument!");
-                        Environment.Exit(0);
+                        Environment.Exit(1);
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message.ToString());
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
 
                 // 2) Check the directory: for pull and push
@@ -317,7 +316,7 @@ namespace csv_to_sql_loader
                         if (!System.IO.Directory.Exists(just_csv_file_path) || !System.IO.File.Exists(csvFilePath))
                         {
                             Console.WriteLine("Folder " + just_csv_file_path + "\nor\nfile name " + just_csv_name + "\ndoesn't exist. You need to create it.");
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                     }
                     else
@@ -330,14 +329,14 @@ namespace csv_to_sql_loader
                         if (!System.IO.Directory.Exists(just_csv_file_path))
                         {
                             Console.WriteLine("Folder " + just_csv_file_path + "\ndoesn't exist. You need to create it.");
-                            Environment.Exit(0);
+                            Environment.Exit(1);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message.ToString());
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
 
                 // 3) Check if table in sql db exists:
@@ -353,14 +352,14 @@ namespace csv_to_sql_loader
                             Functions.CreateSQLTable(csvFilePath, 200001, tableName, connectionString);
                             Console.WriteLine("Table " + tableName + " has been created.");
                             newtable = true;
-                            // Environment.Exit(0);
+                            // Environment.Exit(1);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message.ToString());
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
                 Console.WriteLine();
                 #endregion
@@ -451,7 +450,7 @@ namespace csv_to_sql_loader
                 catch (Exception ex)
                 {
                     Console.WriteLine("Error message: " + ex.Message.ToString());
-                    Environment.Exit(0);
+                    Environment.Exit(1);
                 }
                 #endregion
                 // Console.ReadKey();
@@ -461,8 +460,7 @@ namespace csv_to_sql_loader
             {
                 Console.WriteLine("Invalid no of arguments should be 2, 4 or 6! Please, read documentation!");
             }
-            // Environment.Exit(1);
-            return (1);
+            Environment.Exit(1);
         }
     }
 }
