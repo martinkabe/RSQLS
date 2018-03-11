@@ -13,6 +13,25 @@ namespace csv_to_sql_loader
     {
         static void Main(string[] args)
         {
+            // https://gallery.technet.microsoft.com/scriptcenter/Import-Large-CSVs-into-SQL-216223d9
+
+            //Functions.CreateSQLTable("c:\\Users\\Martin\\Documents\\test.csv", 200001, "[dbo].[mv.New.Table]",
+            //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
+
+            //Functions.WriteFromDBToCSV("select top 200000 * from [dbo].[DataTable]", "c:\\Users\\Martin\\Documents\\data.csv", true,
+            //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
+
+            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "C:\\Users\\Martin\\Documents\\test.csv",
+            //    "[test.Table]", "push", "1", "1" };
+
+            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;", "dbinfo",
+            //    "c:\\Users\\Martin\\Documents\\temp.csv", null };
+
+            // string[] args = { "select * from some tab" };
+            // string conn_string = "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;";
+            //Functions.WriteFromDBToCSV(@"select top 5 * from [dbo].[DataTable]",
+            //    "c:\\Users\\Martin\\Documents\\data3.csv", true, conn_string);
+
             // Test connection:
             Tuple<bool, string> isConnected = Functions.IsServerConnected(args[0]);
             if (!isConnected.Item1)
@@ -442,6 +461,7 @@ namespace csv_to_sql_loader
             {
                 Console.WriteLine("Invalid no of arguments should be 2, 4 or 6! Please, read documentation!");
             }
+            Environment.Exit(1);
         }
     }
 }
