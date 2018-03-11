@@ -356,8 +356,8 @@ get_table_info <- function(connectionString
   file_to_be_deleted <- paste(pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""), sep = "")
   ss <- paste('', pathtocsvloader, " ", connectionString, " ", sql_task, " ", real_pathtocsvfile, " ", sql_tab_name, sep = "")
   # Call shell command
-  # oldw <- getOption("warn")
-  # options(warn = -1)
+  oldw <- getOption("warn")
+  options(warn = -1)
   sc <- shell(ss)
   if (file.exists(file_to_be_deleted)){
     out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE)
