@@ -115,6 +115,8 @@ push_data <- function(connectionString
     if( sc == 1 ) {
       options(warn = oldw)
       stop('See the previous messages for more details.')
+    } else {
+      options(warn = oldw)
     }
   }
 }
@@ -180,6 +182,8 @@ pull_data <- function(connectionString
   if( sc == 1 ) {
     options(warn = oldw)
     stop('See the previous messages for more details.')
+  } else {
+    options(warn = oldw)
   }
   return(out)
 }
@@ -223,6 +227,8 @@ send_SQL_task <- function(connectionString
   if( sc == 1 ) {
     options(warn = oldw)
     stop('See the previous messages for more details.')
+  } else {
+    options(warn = oldw)
   }
 }
 
@@ -275,6 +281,8 @@ get_DB_info <- function(connectionString) {
   if( sc == 1 ) {
     options(warn = oldw)
     stop('See the previous messages for more details.')
+  } else {
+    options(warn = oldw)
   }
   return(out)
 }
@@ -331,6 +339,8 @@ get_table_info <- function(connectionString
   if( sc == 1 ) {
     options(warn = oldw)
     stop('See the previous messages for more details.')
+  } else {
+    options(warn = oldw)
   }
   return(out)
 }
