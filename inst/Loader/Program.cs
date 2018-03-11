@@ -11,7 +11,7 @@ namespace csv_to_sql_loader
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             // https://gallery.technet.microsoft.com/scriptcenter/Import-Large-CSVs-into-SQL-216223d9
 
@@ -461,7 +461,8 @@ namespace csv_to_sql_loader
             {
                 Console.WriteLine("Invalid no of arguments should be 2, 4 or 6! Please, read documentation!");
             }
-            Environment.Exit(1);
+            // Environment.Exit(1);
+            return (1);
         }
     }
 }
