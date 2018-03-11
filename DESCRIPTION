@@ -1,7 +1,7 @@
 Package: RSQLS
 Type: Package
 Title: Package for interactive work with SQL Server
-Version: 1.5
+Version: 1.6
 Author: Martin Kovarik
 Maintainer: Martin Kovarik <martiankabe@gmail.com>
 Description: Package for interactive work with SQL Server
