@@ -111,7 +111,12 @@ push_data <- function(connectionString
     options(warn = -1)
     sc <- shell(ss)
     # Delete csv file
-    if (file.exists(file_to_be_deleted)) invisible(file.remove(file_to_be_deleted)) else return("Try it again")
+    if (file.exists(file_to_be_deleted)){
+      invisible(file.remove(file_to_be_deleted))
+    } else{
+      options(warn = oldw)
+      stop('See the previous messages for more details.')
+    }
     if( sc == 1 ) {
       options(warn = oldw)
       stop('See the previous messages for more details.')
@@ -176,9 +181,20 @@ pull_data <- function(connectionString
   oldw <- getOption("warn")
   options(warn = -1)
   sc <- shell(ss)
-  if (file.exists(file_to_be_deleted)) out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE) else return("Try it again")
+  if (file.exists(file_to_be_deleted)){
+    out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE)
+  } else{
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
   # Delete csv file
-  if (file.exists(file_to_be_deleted)) invisible(file.remove(file_to_be_deleted)) else return("Try it again")
+  if (file.exists(file_to_be_deleted)) {
+    invisible(file.remove(file_to_be_deleted))
+    options(warn = oldw)
+  } else {
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
   if( sc == 1 ) {
     options(warn = oldw)
     stop('See the previous messages for more details.')
@@ -275,9 +291,19 @@ get_DB_info <- function(connectionString) {
   oldw <- getOption("warn")
   options(warn = -1)
   sc <- shell(ss)
-  if (file.exists(file_to_be_deleted)) out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE) else return("Try it again")
+  if (file.exists(file_to_be_deleted)){
+    out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE)
+  } else{
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
   # Delete csv file
-  if (file.exists(file_to_be_deleted)) invisible(file.remove(file_to_be_deleted)) else return("Try it again")
+  if (file.exists(file_to_be_deleted)){
+    invisible(file.remove(file_to_be_deleted))
+  } else{
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
   if( sc == 1 ) {
     options(warn = oldw)
     stop('See the previous messages for more details.')
@@ -330,12 +356,22 @@ get_table_info <- function(connectionString
   file_to_be_deleted <- paste(pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""), sep = "")
   ss <- paste('', pathtocsvloader, " ", connectionString, " ", sql_task, " ", real_pathtocsvfile, " ", sql_tab_name, sep = "")
   # Call shell command
-  oldw <- getOption("warn")
-  options(warn = -1)
+  # oldw <- getOption("warn")
+  # options(warn = -1)
   sc <- shell(ss)
-  if (file.exists(file_to_be_deleted)) out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE) else return("Try it again")
+  if (file.exists(file_to_be_deleted)){
+    out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE)
+  } else{
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
   # Delete csv file
-  if (file.exists(file_to_be_deleted)) invisible(file.remove(file_to_be_deleted)) else return("Try it again")
+  if (file.exists(file_to_be_deleted)){
+    invisible(file.remove(file_to_be_deleted))
+  } else{
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
   if( sc == 1 ) {
     options(warn = oldw)
     stop('See the previous messages for more details.')

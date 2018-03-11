@@ -48,7 +48,7 @@ namespace csv_to_sql_loader
                 // SELECT is not allowed for this type of function
                 if (args[1].ToLower().Contains("select")) { Console.WriteLine("You can CREATE, DELETE or DROP table.\nIf you want return something from DB, use parametrized version: pull_data(connectionString = , sqltask = , showprogress = FALSE)!\nPlease, see the documentation!"); }
                 Functions.SQLQueryTask(args[1], args[0]);
-                Environment.Exit(1);
+                Environment.Exit(0);
             }
 
             else if (args.Length == 4)
@@ -64,12 +64,15 @@ namespace csv_to_sql_loader
                 {
                     Functions.DropTable(args[3], args[0]);
                     Console.WriteLine("Table " + args[3] + " has been deleted.");
-                    Environment.Exit(1);
+                    Environment.Exit(0);
                 }
                 // Implements table info function
                 else if (args[1].ToLower() == "tableinfo")
                 {
-                    if (!Functions.IfSQLTableExists(args[3], args[0])) { Console.WriteLine("Table " + args[3] + " doesn't exist."); Environment.Exit(1); }
+                    if (!Functions.IfSQLTableExists(args[3], args[0])) {
+                        Console.WriteLine("Table " + args[3] + " doesn't exist.");
+                        Environment.Exit(1);
+                    }
                     string tableinfo_sql = @"SELECT [Column Name],[Data type],[Max Length],[precision],[scale],[is_nullable],[Primary Key]
                                         FROM
                                         (
@@ -99,7 +102,7 @@ namespace csv_to_sql_loader
 
                     Functions.WriteFromDBToCSV(tableinfo_sql, args[2], false, args[0]);
                     Console.WriteLine("Basic info about table " + args[3] + " has been created.");
-                    Environment.Exit(1);
+                    Environment.Exit(0);
                 }
                 // Implements db info function
                 else if (args[1].ToLower() == "dbinfo")
@@ -211,7 +214,7 @@ namespace csv_to_sql_loader
 		                                        order by t2.TABLE_NAME";
                     Functions.WriteFromDBToCSV(dbinfo_sql, args[2], false, args[0]);
                     Console.WriteLine("Basic info about database has been created.");
-                    Environment.Exit(1);
+                    Environment.Exit(0);
                 }
                 // Another SQL query task
                 else
@@ -223,7 +226,7 @@ namespace csv_to_sql_loader
                 sqltask.Stop();
                 Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                     sqltask.Elapsed.Minutes, sqltask.Elapsed.Seconds, sqltask.Elapsed.TotalMilliseconds);
-                Environment.Exit(1);
+                Environment.Exit(0);
             }
             else if (args.Length == 6)
             {
@@ -459,8 +462,9 @@ namespace csv_to_sql_loader
             else
             {
                 Console.WriteLine("Invalid no of arguments should be 2, 4 or 6! Please, read documentation!");
+                Environment.Exit(1);
             }
-            Environment.Exit(1);
+            Environment.Exit(0);
         }
     }
 }
