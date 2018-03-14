@@ -226,7 +226,7 @@ namespace csv_to_sql_loader
                     {
                         DataRow drh = dataTypes.Rows[i];
                         //if (!headers[i].ToString().Contains(drh.ItemArray[0].ToString()))
-                        if (headers[i].ToString().Replace("\"", "") != drh.ItemArray[0].ToString())
+                        if (headers[i].ToString().Replace("\"", "").ToLower() != drh.ItemArray[0].ToString().ToLower())
                         {
                             Console.WriteLine("You need to reorder columns in your csv according to columns in table " + tabName + "!!!");
                             Console.WriteLine("Column " + headers[i].ToString().Replace("\"", "") + " in your data.table or data.frame\ndoesn't correspond with column " + drh.ItemArray[0].ToString() + " defined in table " + tabName);
@@ -251,6 +251,7 @@ namespace csv_to_sql_loader
                         else if (dr.ItemArray[1].ToString() == "int") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Int32)); }
                         else if (dr.ItemArray[1].ToString() == "bigint") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Int64)); }
                         else if (dr.ItemArray[1].ToString() == "decimal" || dr.ItemArray[1].ToString() == "numeric") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(decimal)); }
+                        else if (dr.ItemArray[1].ToString() == "uniqueidentifier") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Guid)); }
                         else { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(string)); }
                     }
 
@@ -557,6 +558,7 @@ namespace csv_to_sql_loader
                 Environment.Exit(1);
             }
         }
+
         public static void CreateSQLTable(string pathtocsv, Int32 rowstoestimatedatatype, string tablename, string connstring)
         {
             char separator;
@@ -601,6 +603,7 @@ namespace csv_to_sql_loader
                 Environment.Exit(1);
             }
         }
+
         public static Tuple<bool, string> IsServerConnected(string connectionString)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
