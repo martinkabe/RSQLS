@@ -52,55 +52,55 @@ pull_data(connString, sqltask, showprogress = FALSE)
 **send_SQL_task**
 * Allows user to create table, drop table, delere rows in table or create new table on SQL Server.
 ```
-send_SQL_task(connString, sqltask)
+send_SQL_task(connectionString, sqltask)
 ```
 
 **get_DB_info**
 * Retrieving basic info about SQL database. Be sure you have a permissions for access to *sys.dm_db_index_usage_stats*: check it with *SELECT * FROM sys.dm_db_index_usage_stats*. If not, contact your SQL Server admin.
 ```
-get_DB_info(connString)
+get_DB_info(connectionString)
 ```
 
 **get_table_info**
 * Retrieving basic info about SQL table.
 ```
-get_table_info(connString, sqltabname)
+get_table_info(connectionString, sqltabname)
 ```
 
 ### Examples
 * push_data
 ```
-push_data(connString, dataFrame, "dbo.TableName")
+push_data(connectionString, dataFrame, "dbo.TableName")
 ```
 * pull_data
 ```
-pull_data(connString, "SELECT * FROM dbo.TableName")
+pull_data(connectionString, "SELECT * FROM dbo.TableName")
 ```
 
 * send_SQL_task
 ```
-send_SQL_task(connString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
-send_SQL_task(connString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
-send_SQL_task(connString, "DROP TABLE dbo.TableName")
+send_SQL_task(connectionString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
+send_SQL_task(connectionString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
+send_SQL_task(connectionString, "DROP TABLE dbo.TableName")
 ```
 
 * get_DB_info
 ```
-get_DB_info(connString)
+get_DB_info(connectionString)
 ```
 
 * get_table_info
 ```
-get_table_info(connString, "dbo.tableName")
+get_table_info(connectionString, "dbo.tableName")
 ```
 
 * How to set up connection string
 ```
 # set_connString(datasource, database, usr, pwd)
 # If username and password missing or empty Integrated Security=True is used in connection string instead.
-connString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name")
+connectionString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name")
 # Connection string with username and password:
-connString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name", usr = "username", pwd = "password")
+connectionString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name", usr = "username", pwd = "password")
 ```
 
 ### Performance testing

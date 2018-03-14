@@ -5,15 +5,13 @@
 \alias{RSQLS}
 \title{RSQLS package}
 \usage{
-\describe{
-\item{\link{push_data}}{push_data(connString, dataFrame, "dbo.TableName")}
-\item{\link{pull_data}}{pull_data(connString, "SELECT * FROM dbo.TableName")}
-\item{\link{send_SQL_task}}{send_SQL_task(connString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
-send_SQL_task(connString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
-send_SQL_task(connString, "DROP TABLE dbo.TableName")}
-\item{\link{get_DB_info}}{get_DB_info(connString)}
-\item{\link{get_table_info}}{get_table_info(connString, "dbo.tableName")}
-}
+push_data(connectionString, DataFrame, "dbo.TableName", append = F, showprogress = F)
+pull_data(connectionString, "SELECT * FROM dbo.TableName")
+send_SQL_task(connectionString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
+send_SQL_task(connectionString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
+send_SQL_task(connectionString, "DROP TABLE dbo.TableName")
+get_DB_info(connectionString)
+get_table_info(connectionString, "dbo.tableName")
 }
 \description{
 Package for interactive work with SQL Server

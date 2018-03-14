@@ -15,22 +15,22 @@ namespace csv_to_sql_loader
         {
             // https://gallery.technet.microsoft.com/scriptcenter/Import-Large-CSVs-into-SQL-216223d9
 
-            //Functions.CreateSQLTable("c:\\Users\\Martin\\Documents\\test.csv", 200001, "[dbo].[mv.New.Table]",
+            //Functions.CreateSQLTable("c:\\test.csv", 200001, "[dbo].[mv.New.Table]",
             //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
 
-            //Functions.WriteFromDBToCSV("select top 200000 * from [dbo].[DataTable]", "c:\\Users\\Martin\\Documents\\data.csv", true,
+            //Functions.WriteFromDBToCSV("select top 200000 * from [dbo].[DataTable]", "c:\\data.csv", true,
             //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
 
-            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "C:\\Users\\Martin\\Documents\\test.csv",
+            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "C:\\test.csv",
             //    "[test.Table]", "push", "1", "1" };
 
             //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;", "dbinfo",
-            //    "c:\\Users\\Martin\\Documents\\temp.csv", null };
+            //    "c:\\temp.csv", null };
 
             // string[] args = { "select * from some tab" };
             // string conn_string = "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;";
             //Functions.WriteFromDBToCSV(@"select top 5 * from [dbo].[DataTable]",
-            //    "c:\\Users\\Martin\\Documents\\data3.csv", true, conn_string);
+            //    "c:\\data3.csv", true, conn_string);
 
             // Test connection:
             Tuple<bool, string> isConnected = Functions.IsServerConnected(args[0]);

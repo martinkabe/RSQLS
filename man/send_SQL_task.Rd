@@ -19,7 +19,7 @@ or create new table on SQL Server
 How to set up SQL Server connection string see \link{set_connString}.
 }
 \examples{
-send_SQL_task(connString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
-send_SQL_task(connString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
-send_SQL_task(connString, "DROP TABLE dbo.TableName")
+send_SQL_task(connectionString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
+send_SQL_task(connectionString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
+send_SQL_task(connectionString, "DROP TABLE dbo.TableName")
 }

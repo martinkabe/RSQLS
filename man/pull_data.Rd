@@ -24,5 +24,5 @@ via SQL query and returns data.table and data.frame object
 How to set up SQL Server connection string see \link{set_connString}.
 }
 \examples{
-pull_data(connString, "SELECT * FROM dbo.TableName")
+pull_data(connectionString, "SELECT * FROM dbo.TableName")
 }

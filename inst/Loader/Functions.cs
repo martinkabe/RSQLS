@@ -226,7 +226,7 @@ namespace csv_to_sql_loader
                     {
                         DataRow drh = dataTypes.Rows[i];
                         //if (!headers[i].ToString().Contains(drh.ItemArray[0].ToString()))
-                        if (headers[i].ToString().Replace("\"", "") != drh.ItemArray[0].ToString())
+                        if (headers[i].ToString().Replace("\"", "").ToLower() != drh.ItemArray[0].ToString().ToLower())
                         {
                             Console.WriteLine("You need to reorder columns in your csv according to columns in table " + tabName + "!!!");
                             Console.WriteLine("Column " + headers[i].ToString().Replace("\"", "") + " in your data.table or data.frame\ndoesn't correspond with column " + drh.ItemArray[0].ToString() + " defined in table " + tabName);

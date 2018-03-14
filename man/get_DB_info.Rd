@@ -17,9 +17,8 @@ This function retrieves basic info about database defined
 in SQL Server connection string.
 }
 \note{
-How to set up SQL Server connection string see \link{set_connString}.
-
-Be sure you have a permissions for access to sys.dm_db_index_usage_stats: check it with SELECT * FROM sys.dm_db_index_usage_stats. If not, contact your SQL Server admin.
+How to set up SQL Server connection string see \link{set_connString}. Be also sure you have a permissions for access to sys.dm_db_index_usage_stats:
+check it with SELECT * FROM sys.dm_db_index_usage_stats. If not, contact your SQL Server admin.
 }
 \examples{
 get_DB_info(connectionString)

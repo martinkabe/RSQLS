@@ -56,7 +56,7 @@ replace_spaced_words <- function(str_string) {
 #' @note Table is automatically created if doesn't exist on SQL Server with automatically identified data types.
 #' @export
 #' @examples
-#' push_data(connString, dataFrame, "dbo.TableName")
+#' push_data(connectionString, dataFrame, "dbo.TableName")
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 push_data <- function(connectionString
                       ,df
@@ -138,7 +138,7 @@ push_data <- function(connectionString
 #' @return Returns data.frame and data.table
 #' @export
 #' @examples
-#' pull_data(connString, "SELECT * FROM dbo.TableName")
+#' pull_data(connectionString, "SELECT * FROM dbo.TableName")
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 pull_data <- function(connectionString
                       ,sqltask
@@ -214,9 +214,9 @@ pull_data <- function(connectionString
 #' @param sqltask SQL query for retrieving data from SQL server
 #' @export
 #' @examples
-#' send_SQL_task(connString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
-#' send_SQL_task(connString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
-#' send_SQL_task(connString, "DROP TABLE dbo.TableName")
+#' send_SQL_task(connectionString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
+#' send_SQL_task(connectionString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
+#' send_SQL_task(connectionString, "DROP TABLE dbo.TableName")
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 send_SQL_task <- function(connectionString
                           ,sqltask)
@@ -259,14 +259,16 @@ send_SQL_task <- function(connectionString
 #' @export
 #' @examples
 #' get_DB_info(connectionString)
-#' @note How to set up SQL Server connection string see \link{set_connString}.
-#' @note Be sure you have a permissions for access to sys.dm_db_index_usage_stats: check it with SELECT * FROM sys.dm_db_index_usage_stats. If not, contact your SQL Server admin.
+#' @note How to set up SQL Server connection string see \link{set_connString}. Be also sure you have a permissions for access to sys.dm_db_index_usage_stats:
+#' check it with SELECT * FROM sys.dm_db_index_usage_stats. If not, contact your SQL Server admin.
+
 get_DB_info <- function(connectionString) {
   options(scipen=999)
   if (missing(connectionString)) {
     print("Connection string is missing!")
     return("Try it again")
   }
+  # connectionString <- connectionString
   pathtocsvloader <- gsub("/","\\\\",paste(system.file(package = "RSQLS")[1],"/Loader/csv_to_sql_loader.exe", sep = ""))
   pathtocsvloader <- replace_spaced_words(pathtocsvloader)
   pathtocsvloader <- gsub('.{1}$', '', pathtocsvloader)
@@ -323,7 +325,7 @@ get_DB_info <- function(connectionString) {
 #' @return Returns data.frame and data.table
 #' @export
 #' @examples
-#' get_table_info(connString, "dbo.tableName")
+#' get_table_info(connectionString, "dbo.tableName")
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 get_table_info <- function(connectionString
                            ,sqltabname) {
@@ -394,17 +396,17 @@ get_table_info <- function(connectionString
 #' \item{\link{get_DB_info}}{Retrieving basic info about SQL database.}
 #' \item{\link{get_table_info}}{Retrieving basic info about SQL table.}
 #' }
-#' @author Martin Kovarik
 #' @usage
-#' \describe{
-#' \item{\link{push_data}}{push_data(connString, dataFrame, "dbo.TableName")}
-#' \item{\link{pull_data}}{pull_data(connString, "SELECT * FROM dbo.TableName")}
-#' \item{\link{send_SQL_task}}{send_SQL_task(connString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
-#' send_SQL_task(connString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
-#' send_SQL_task(connString, "DROP TABLE dbo.TableName")}
-#' \item{\link{get_DB_info}}{get_DB_info(connString)}
-#' \item{\link{get_table_info}}{get_table_info(connString, "dbo.tableName")}
-#' }
+#' push_data(connectionString, DataFrame, "dbo.TableName", append = F, showprogress = F)
+#' pull_data(connectionString, "SELECT * FROM dbo.TableName")
+#' send_SQL_task(connectionString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
+#' send_SQL_task(connectionString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
+#' send_SQL_task(connectionString, "DROP TABLE dbo.TableName")
+#' get_DB_info(connectionString)
+#' get_table_info(connectionString, "dbo.tableName")
+#' @author Martin Kovarik
 #' @note How to set up SQL Server connection string see \link{set_connString}.
+#' @importFrom data.table fread fwrite
+#' @importFrom "utils" "data"
 #'
 RSQLS <- function(){}
