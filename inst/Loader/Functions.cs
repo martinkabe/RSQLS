@@ -251,6 +251,7 @@ namespace csv_to_sql_loader
                         else if (dr.ItemArray[1].ToString() == "int") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Int32)); }
                         else if (dr.ItemArray[1].ToString() == "bigint") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Int64)); }
                         else if (dr.ItemArray[1].ToString() == "decimal" || dr.ItemArray[1].ToString() == "numeric") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(decimal)); }
+                        else if (dr.ItemArray[1].ToString() == "uniqueidentifier") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Guid)); }
                         else { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(string)); }
                     }
 
