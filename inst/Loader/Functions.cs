@@ -558,6 +558,7 @@ namespace csv_to_sql_loader
                 Environment.Exit(1);
             }
         }
+
         public static void CreateSQLTable(string pathtocsv, Int32 rowstoestimatedatatype, string tablename, string connstring)
         {
             char separator;
@@ -602,6 +603,7 @@ namespace csv_to_sql_loader
                 Environment.Exit(1);
             }
         }
+
         public static Tuple<bool, string> IsServerConnected(string connectionString)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
