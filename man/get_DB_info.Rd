@@ -21,5 +21,7 @@ How to set up SQL Server connection string see \link{set_connString}. Be also su
 check it with SELECT * FROM sys.dm_db_index_usage_stats. If not, contact your SQL Server admin.
 }
 \examples{
+\dontrun{
 get_DB_info(connectionString)
+}
 }

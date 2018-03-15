@@ -21,5 +21,7 @@ This function retrieves basic info about table
 How to set up SQL Server connection string see \link{set_connString}.
 }
 \examples{
+\dontrun{
 get_table_info(connectionString, "dbo.tableName")
+}
 }

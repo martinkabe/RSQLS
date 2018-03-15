@@ -28,5 +28,7 @@ Table is automatically created if doesn't exist on SQL Server with automatically
 How to set up SQL Server connection string see \link{set_connString}.
 }
 \examples{
+\dontrun{
 push_data(connectionString, dataFrame, "dbo.TableName")
+}
 }

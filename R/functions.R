@@ -56,7 +56,9 @@ replace_spaced_words <- function(str_string) {
 #' @note Table is automatically created if doesn't exist on SQL Server with automatically identified data types.
 #' @export
 #' @examples
+#' \dontrun{
 #' push_data(connectionString, dataFrame, "dbo.TableName")
+#' }
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 push_data <- function(connectionString
                       ,df
@@ -138,7 +140,9 @@ push_data <- function(connectionString
 #' @return Returns data.frame and data.table
 #' @export
 #' @examples
+#' \dontrun{
 #' pull_data(connectionString, "SELECT * FROM dbo.TableName")
+#' }
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 pull_data <- function(connectionString
                       ,sqltask
@@ -214,9 +218,11 @@ pull_data <- function(connectionString
 #' @param sqltask SQL query for retrieving data from SQL server
 #' @export
 #' @examples
+#' \dontrun{
 #' send_SQL_task(connectionString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
 #' send_SQL_task(connectionString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
 #' send_SQL_task(connectionString, "DROP TABLE dbo.TableName")
+#' }
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 send_SQL_task <- function(connectionString
                           ,sqltask)
@@ -258,7 +264,9 @@ send_SQL_task <- function(connectionString
 #' @return Returns data.frame and data.table
 #' @export
 #' @examples
+#' \dontrun{
 #' get_DB_info(connectionString)
+#' }
 #' @note How to set up SQL Server connection string see \link{set_connString}. Be also sure you have a permissions for access to sys.dm_db_index_usage_stats:
 #' check it with SELECT * FROM sys.dm_db_index_usage_stats. If not, contact your SQL Server admin.
 
@@ -325,7 +333,9 @@ get_DB_info <- function(connectionString) {
 #' @return Returns data.frame and data.table
 #' @export
 #' @examples
+#' \dontrun{
 #' get_table_info(connectionString, "dbo.tableName")
+#' }
 #' @note How to set up SQL Server connection string see \link{set_connString}.
 get_table_info <- function(connectionString
                            ,sqltabname) {
