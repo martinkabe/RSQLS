@@ -25,6 +25,23 @@ set_connString <- function(datasource, database, usr, pwd) {
   return(paste('"', ds, db, last_param, '"', sep = ""))
 }
 
+convert_date_format_toString <- function(df) {
+  # define ingerits for date formats
+  is.POSIXct <- function(x) inherits(x, "POSIXct")
+  is.POSIXlt <- function(x) inherits(x, "POSIXlt")
+  is.POSIXt <- function(x) inherits(x, "POSIXt")
+  is.Date <- function(x) inherits(x, "Date")
+  # extract column numbers
+  col_nums <- c()
+  col_nums <- c(col_nums, which(sapply(df, is.POSIXct)))
+  col_nums <- c(col_nums, which(sapply(df, is.POSIXlt)))
+  col_nums <- c(col_nums, which(sapply(df, is.POSIXt)))
+  col_nums <- c(col_nums, which(sapply(df, is.Date)))
+  col_nums <- sort(unique(col_nums))
+  df[col_nums] <- sapply(df[col_nums], as.character)
+  return(df)
+}
+
 replace_spaced_words <- function(str_string) {
   complete_string <- ""
   str_text <- strsplit(str_string,"\\\\")
@@ -71,6 +88,8 @@ push_data <- function(connectionString
   #   print(paste("data.frame called ", deparse(substitute(df)), " does not exist!", sep = ""))
   #   return("Try it again")
   # }
+  # Convert datetime or date to string format
+  df <- convert_date_format_toString(df)
   if (missing(connectionString)) {
     print("Connection string is missing!")
     return("Try it again")
