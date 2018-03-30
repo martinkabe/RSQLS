@@ -30,13 +30,11 @@ convert_date_format_toString <- function(df) {
   is.POSIXct <- function(x) inherits(x, "POSIXct")
   is.POSIXlt <- function(x) inherits(x, "POSIXlt")
   is.POSIXt <- function(x) inherits(x, "POSIXt")
-  is.Date <- function(x) inherits(x, "Date")
   # extract column numbers
   col_nums <- c()
   col_nums <- c(col_nums, which(sapply(df, is.POSIXct)))
   col_nums <- c(col_nums, which(sapply(df, is.POSIXlt)))
   col_nums <- c(col_nums, which(sapply(df, is.POSIXt)))
-  col_nums <- c(col_nums, which(sapply(df, is.Date)))
   col_nums <- sort(unique(col_nums))
   df[col_nums] <- sapply(df[col_nums], as.character)
   return(df)
