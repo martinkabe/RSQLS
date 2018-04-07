@@ -47,6 +47,7 @@ push_data(connString, df, sqltabname, append = FALSE, showprogress = FALSE)
 * Pulling data from SQL Server.
 ```
 pull_data(connString, sqltask, showprogress = FALSE)
+dpull_data(connString, sqltask, showprogress = FALSE) # pulling data from SQL Server directly into flat file via StreamReader class
 ```
 
 **send_SQL_task**
