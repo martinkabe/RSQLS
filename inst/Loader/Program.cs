@@ -22,7 +22,7 @@ namespace csv_to_sql_loader
             //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
 
             //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "C:\\test.csv",
-            //    "[test.Table]", "push", "1", "1" };
+            //    "[TestCase]", "push", "1", "1" };
 
             //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;", "dbinfo",
             //    "c:\\temp.csv", null };
@@ -266,7 +266,7 @@ namespace csv_to_sql_loader
                             Environment.Exit(1);
                         }
                     }
-                    else if (push_or_pull_1.ToLower() == "pull")
+                    else if (push_or_pull_1.ToLower() == "pull" || push_or_pull_1.ToLower() == "dpull")
                     {
                         if (args.Length != 6)
                         {
@@ -426,7 +426,7 @@ namespace csv_to_sql_loader
                         Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                             push.Elapsed.Minutes, push.Elapsed.Seconds, push.Elapsed.TotalMilliseconds);
                     }
-                    else // pull
+                    else if (push_or_pull_1.ToLower() == "pull")
                     {
                         Stopwatch pull = new Stopwatch();
                         pull.Start();
@@ -447,7 +447,27 @@ namespace csv_to_sql_loader
                         Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                             pull.Elapsed.Minutes, pull.Elapsed.Seconds, pull.Elapsed.TotalMilliseconds);
                     }
+                    else if (push_or_pull_1.ToLower() == "dpull")
+                    {
+                        Stopwatch pull = new Stopwatch();
+                        pull.Start();
 
+                        // handle show progress parameter
+                        if (push_or_pull_3 == "1")
+                        {
+                            Console.WriteLine("Downloading data from sql table into csv file with showing progress");
+                            Functions.WriteToFileFromDB(push_or_pull_2, csvFilePath, true, connectionString);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Downloading data from sql table into csv file without showing progress");
+                            Functions.WriteToFileFromDB(push_or_pull_2, csvFilePath, false, connectionString);
+                        }
+
+                        pull.Stop();
+                        Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
+                            pull.Elapsed.Minutes, pull.Elapsed.Seconds, pull.Elapsed.TotalMilliseconds);
+                    }
                     Console.WriteLine();
                 }
                 catch (Exception ex)

@@ -558,6 +558,101 @@ namespace csv_to_sql_loader
                 Environment.Exit(1);
             }
         }
+
+        // Write sql data directly to flat file
+        public static void WriteToFileFromDB(string sql_query, string csvpath, bool showprogress, string connString)
+        {
+            try
+            {
+                // define separator
+                string sep = "~";
+                // define counter for writing into flat file
+                Int32 cntr = 0;
+                Int32 cntr_overall = 0;
+                //create connection
+                SqlCommand comm = new SqlCommand
+                {
+                    Connection = new SqlConnection(connString)
+                };
+                String sql = sql_query;
+
+                comm.CommandText = sql;
+                comm.Connection.Open();
+
+                SqlDataReader sqlReader = comm.ExecuteReader();
+
+                // Open the file for write operations.  If exists, it will overwrite due to the "false" parameter
+                using (StreamWriter file = new StreamWriter(csvpath, false))
+                {
+                    object[] output = new object[sqlReader.FieldCount];
+
+                    for (int i = 0; i < sqlReader.FieldCount; i++)
+                        output[i] = sqlReader.GetName(i);
+
+                    file.WriteLine(string.Join(sep, output));
+
+                    while (sqlReader.Read())
+                    {
+                        sqlReader.GetValues(output);
+
+                        string day_s = string.Empty;
+                        string month_s = string.Empty;
+                        Int32 counter = 0;
+
+                        foreach (var val in output)
+                        {
+                            if (val.GetType().Name == "DateTime")
+                            {
+                                DateTime dt_val = DateTime.Parse(val.ToString(), null, DateTimeStyles.RoundtripKind);
+                                if (dt_val.Month.ToString().Length == 1)
+                                {
+                                    month_s = "0" + dt_val.Month.ToString();
+                                }
+                                else
+                                {
+                                    month_s = dt_val.Month.ToString();
+                                }
+                                if (dt_val.Day.ToString().Length == 1)
+                                {
+                                    day_s = "0" + dt_val.Day.ToString();
+                                }
+                                else
+                                {
+                                    day_s = dt_val.Day.ToString();
+                                }
+                                if (dt_val.Hour == 0 & dt_val.Minute == 0 & dt_val.Second == 0 & dt_val.Millisecond == 0)
+                                {
+                                    output[counter] = dt_val.Year.ToString() + "-" + month_s + "-" + day_s;
+                                }
+                                else
+                                {
+                                    output[counter] = dt_val.Year.ToString() + "-" + month_s + "-" + day_s + " " + dt_val.TimeOfDay.ToString();
+                                }
+                            }
+                            counter += 1;
+                        }
+                        if (cntr == 100000)
+                        {
+                            if (showprogress)
+                            {
+                                Console.WriteLine("Flushed 100000 records into flat file, " + cntr_overall + " records already there.");
+                            }
+                            cntr = 0;
+                        }
+                        file.WriteLine(string.Join(sep, output));
+                        cntr_overall += 1;
+                        cntr += 1;
+                    }
+                }
+                comm.Connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                Environment.Exit(1);
+            }
+        }
+
         public static void CreateSQLTable(string pathtocsv, Int32 rowstoestimatedatatype, string tablename, string connstring)
         {
             char separator;

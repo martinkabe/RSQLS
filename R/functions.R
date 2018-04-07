@@ -225,6 +225,86 @@ pull_data <- function(connectionString
   return(out)
 }
 
+# dPull data from SQL table ------------------------------------------------
+
+#' Direct pull data from SQL server via SQL query into flat file with StreamReader class
+#'
+#' This function pulls the data from SQL server directly into flat file via StreamReader class
+#' via SQL query and returns data.table and data.frame object
+#' @param connectionString Connection string to SQL server
+#' @param sqltask SQL query for selecting data on SQL server
+#' @param showprogress Showing progress (default value is FALSE)
+#' @return Returns data.frame and data.table
+#' @export
+#' @examples
+#' \dontrun{
+#' dpull_data(connectionString, "SELECT * FROM dbo.TableName")
+#' }
+#' @note How to set up SQL Server connection string see \link{set_connString}.
+dpull_data <- function(connectionString
+                      ,sqltask
+                      ,showprogress = FALSE) {
+  options(scipen=999)
+  if (missing(connectionString)) {
+    print("Connection string is missing!")
+    return("Try it again")
+  }
+  pathtocsvloader <- gsub("/","\\\\",paste(system.file(package = "RSQLS")[1],"/Loader/csv_to_sql_loader.exe", sep = ""))
+  pathtocsvloader <- replace_spaced_words(pathtocsvloader)
+  pathtocsvloader <- gsub('.{1}$', '', pathtocsvloader)
+  # logic for pathtocsvfiles variable
+  pathtocsvfiles <- gsub("/","\\\\",paste(system.file(package = "RSQLS")[1],"/Data/", sep = ""))
+  if (!endsWith(pathtocsvfiles, "\\")) {
+    pathtocsvfiles <- paste(pathtocsvfiles,"\\", sep = "")
+  }
+  sqltabname <- "tempTable"
+  sqltabname <- gsub("\\[|\\]", "", sqltabname)
+  if (length(strsplit(sqltabname,"\\.")[[1]]) > 1) {
+    sqltabname_prev <- gsub("^[^.]*.", "", sqltabname)
+  } else {
+    sqltabname_prev <- sqltabname
+  }
+  sql_tab_name <- paste('"', sqltabname, '"', sep = "") # '"dbo.CFTC_Disaggregated_Raw_test"'
+  sql_tab_name <- paste('"', sqltabname, '"', sep = "") # '"dbo.CFTC_Disaggregated_Raw_test"'
+  operation <- paste('"dpull"', sep = "")
+  if (missing(sqltask)) {
+    print("SQL task shouldn't be missing!")
+    return("Try it again")
+  }
+  sql_task <- paste('"', sqltask, '"', sep = "")
+  sql_task <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", gsub("[\r\n]", "", sql_task), perl=TRUE)
+  if (showprogress == FALSE) showprogress = 0 else showprogress = 1
+  show_progress <- paste('"', showprogress, '"', sep = "")
+  real_pathtocsvfile <- paste('"', pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""),'"', sep = "")
+  file_to_be_deleted <- paste(pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""), sep = "")
+  ss <- paste('', pathtocsvloader, " ", connectionString, " ", real_pathtocsvfile, " ", "null", " ", operation, " ", sql_task, " ", show_progress, sep = "")
+  # Call shell command
+  oldw <- getOption("warn")
+  options(warn = -1)
+  sc <- shell(ss)
+  if (file.exists(file_to_be_deleted)){
+    out <- data.table::fread(file_to_be_deleted, stringsAsFactors = FALSE, sep = "~", fill = TRUE)
+  } else{
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
+  # Delete csv file
+  if (file.exists(file_to_be_deleted)) {
+    invisible(file.remove(file_to_be_deleted))
+    options(warn = oldw)
+  } else {
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  }
+  if( sc == 1 ) {
+    options(warn = oldw)
+    stop('See the previous messages for more details.')
+  } else {
+    options(warn = oldw)
+  }
+  return(out)
+}
+
 # Drop, Delete, Create table ----------------------------------------------
 
 #' Drop, delete or create table
@@ -419,6 +499,7 @@ get_table_info <- function(connectionString
 #' \describe{
 #' \item{\link{push_data}}{Pushing data into SQL Server.}
 #' \item{\link{pull_data}}{Pulling data from SQL Server.}
+#' \item{\link{dpull_data}}{Pulling data from SQL Server directly into flat file.}
 #' \item{\link{send_SQL_task}}{Allows user to create table, drop table, delere rows in table or create new table on SQL Server.}
 #' \item{\link{get_DB_info}}{Retrieving basic info about SQL database.}
 #' \item{\link{get_table_info}}{Retrieving basic info about SQL table.}
@@ -426,6 +507,7 @@ get_table_info <- function(connectionString
 #' @usage
 #' push_data(connectionString, DataFrame, "dbo.TableName", append = F, showprogress = F)
 #' pull_data(connectionString, "SELECT * FROM dbo.TableName")
+#' dpull_data(connectionString, "SELECT * FROM dbo.TableName")
 #' send_SQL_task(connectionString, "CREATE TABLE dbo.TableName (ID int not null, Name varchar(100))")
 #' send_SQL_task(connectionString, "DELETE FROM dbo.TableName WHERE ColumnName = 'SomeValue'")
 #' send_SQL_task(connectionString, "DROP TABLE dbo.TableName")
