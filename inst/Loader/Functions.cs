@@ -508,7 +508,14 @@ namespace csv_to_sql_loader
                                     {
                                         day_s = dt_val.Day.ToString();
                                     }
-                                    value = dt_val.Year.ToString() + "-" + month_s + "-" + day_s + " " + dt_val.TimeOfDay.ToString();
+                                    if (dt_val.Hour == 0 & dt_val.Minute == 0 & dt_val.Second == 0 & dt_val.Millisecond == 0)
+                                    {
+                                        value = dt_val.Year.ToString() + "-" + month_s + "-" + day_s;
+                                    }
+                                    else
+                                    {
+                                        value = dt_val.Year.ToString() + "-" + month_s + "-" + day_s + " " + dt_val.TimeOfDay.ToString();
+                                    }
                                     sb.Append(value);
                                     sb.Append(i == dataTable.Columns.Count - 1 ? "\n" : sep);
                                 }
