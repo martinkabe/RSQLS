@@ -491,7 +491,7 @@ namespace csv_to_sql_loader
                             {
                                 if (row[i].GetType().Name == "DateTime")
                                 {
-                                    DateTime dt_val = DateTime.Parse(row[i].ToString(), null, DateTimeStyles.RoundtripKind);
+                                    DateTime dt_val = (DateTime)row[i];
                                     if (dt_val.Month.ToString().Length == 1)
                                     {
                                         month_s = "0" + dt_val.Month.ToString();
@@ -603,7 +603,7 @@ namespace csv_to_sql_loader
                         {
                             if (val.GetType().Name == "DateTime")
                             {
-                                DateTime dt_val = DateTime.Parse(val.ToString(), null, DateTimeStyles.RoundtripKind);
+                                DateTime dt_val = (DateTime)val;
                                 if (dt_val.Month.ToString().Length == 1)
                                 {
                                     month_s = "0" + dt_val.Month.ToString();
