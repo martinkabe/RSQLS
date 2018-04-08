@@ -638,12 +638,9 @@ namespace csv_to_sql_loader
                             }
                             counter += 1;
                         }
-                        if (cntr == 100000)
+                        if (cntr == 100000 && showprogress)
                         {
-                            if (showprogress)
-                            {
-                                Console.WriteLine("Flushed 100000 records into flat file, " + cntr_overall + " records already there.");
-                            }
+                            Console.WriteLine("Flushed 100000 records into flat file, " + cntr_overall + " records are already there.");
                             cntr = 0;
                         }
                         file.WriteLine(string.Join(sep, output));
