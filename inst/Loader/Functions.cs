@@ -645,7 +645,7 @@ namespace csv_to_sql_loader
                                 Double numval;
                                 if (double.TryParse(val.ToString(), out numval))
                                 {
-                                    output[counter] = numval;
+                                    output[counter] = numval.ToString(CultureInfo.InvariantCulture);
                                 }
                             }
                             else
