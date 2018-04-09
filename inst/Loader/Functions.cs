@@ -636,6 +636,22 @@ namespace csv_to_sql_loader
                                     output[counter] = dt_val.Year.ToString() + "-" + month_s + "-" + day_s + " " + dt_val.TimeOfDay.ToString();
                                 }
                             }
+                            else if (val.GetType().Name == "Decimal" |
+                                    val.GetType().Name == "Numeric" |
+                                    val.GetType().Name == "Float" |
+                                    val.GetType().Name == "Double" |
+                                    val.GetType().Name == "Single")
+                            {
+                                Double numval;
+                                if (double.TryParse(val.ToString(), out numval))
+                                {
+                                    output[counter] = numval;
+                                }
+                            }
+                            else
+                            {
+                                output[counter] = val.ToString();
+                            }
                             counter += 1;
                         }
                         if (cntr == 100000 && showprogress)
