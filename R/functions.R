@@ -177,7 +177,7 @@ pull_data <- function(connectionString
   if (!endsWith(pathtocsvfiles, "\\")) {
     pathtocsvfiles <- paste(pathtocsvfiles,"\\", sep = "")
   }
-  sqltabname <- "tempTable"
+  sqltabname <- paste("tempTable", sample(x = 100000, size = 1, replace = F), sep = "")
   sqltabname <- gsub("\\[|\\]", "", sqltabname)
   if (length(strsplit(sqltabname,"\\.")[[1]]) > 1) {
     sqltabname_prev <- gsub("^[^.]*.", "", sqltabname)
@@ -257,7 +257,7 @@ dpull_data <- function(connectionString
   if (!endsWith(pathtocsvfiles, "\\")) {
     pathtocsvfiles <- paste(pathtocsvfiles,"\\", sep = "")
   }
-  sqltabname <- "tempTable"
+  sqltabname <- paste("tempTable", sample(x = 100000, size = 1, replace = F), sep = "")
   sqltabname <- gsub("\\[|\\]", "", sqltabname)
   if (length(strsplit(sqltabname,"\\.")[[1]]) > 1) {
     sqltabname_prev <- gsub("^[^.]*.", "", sqltabname)
