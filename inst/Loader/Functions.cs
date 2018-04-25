@@ -583,6 +583,7 @@ namespace csv_to_sql_loader
                 };
                 String sql = sql_query;
 
+                comm.CommandTimeout = 0;
                 comm.CommandText = sql;
                 comm.Connection.Open();
 
