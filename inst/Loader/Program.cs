@@ -21,8 +21,8 @@ namespace csv_to_sql_loader
             //Functions.WriteFromDBToCSV("select top 200000 * from [dbo].[DataTable]", "c:\\data.csv", true,
             //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
 
-            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "C:\\test.csv",
-            //    "[TestCase]", "push", "1", "1" };
+            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "c:\\data.csv",
+            //    "[dbo].[test.Table]", "push", "0", "0" };
 
             //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;", "dbinfo",
             //    "c:\\temp.csv", null };

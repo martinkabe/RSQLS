@@ -64,14 +64,20 @@ namespace csv_to_sql_loader
                             Console.WriteLine();
                             Console.WriteLine("Table " + sqlTableName + " already exists in DB, just change data type - see the tip below.");
                             Console.WriteLine("Tip: try something like ALTER TABLE table_name ALTER COLUMN column_name datatype;");
-                            CleanUpTable(sqlTableName, connString);
+                            // CleanUpTable(sqlTableName, connString);
+                            Environment.Exit(1);
+                        }
+                        else
+                        {
+                            Console.WriteLine(ex.Message.ToString());
+                            // CleanUpTable(sqlTableName, connString);
                             Environment.Exit(1);
                         }
                     }
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message.ToString());
-                        CleanUpTable(sqlTableName, connString);
+                        // CleanUpTable(sqlTableName, connString);
                         Environment.Exit(1);
                     }
                 }
