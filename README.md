@@ -103,7 +103,7 @@ connectionString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", datab
 # Connection string with username and password:
 connectionString <- set_connString(datasource = "LAPTOP-USER\\SQLEXPRESS", database = "Database_Name", usr = "username", pwd = "password")
 ```
-All connections are closed automatically.
+*All connections are closed automatically.*
 
 ### Performance testing
 Tested on Intel(R) Core(TM) i7-7500 CPU, 2.70GHz 2.90GHz, 12GB RAM, x64 Operating System Windows, SQL Server 2014 Express.
