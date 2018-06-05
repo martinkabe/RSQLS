@@ -291,11 +291,11 @@ namespace csv_to_sql_loader
                     //        Environment.Exit(1);
                     //    }
                     //}
-                    else
-                    {
-                        Console.WriteLine("Have no idea what " + push_or_pull_1.ToLower() + " is. program knows only push or pull as a first argument!");
-                        Environment.Exit(1);
-                    }
+                    //else
+                    //{
+                    //    Console.WriteLine("Have no idea what " + push_or_pull_1.ToLower() + " is. program knows only push or pull as a first argument!");
+                    //    Environment.Exit(1);
+                    //}
                 }
                 catch (Exception ex)
                 {
