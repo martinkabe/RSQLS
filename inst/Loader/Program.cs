@@ -266,31 +266,31 @@ namespace csv_to_sql_loader
                             Environment.Exit(1);
                         }
                     }
-                    else if (push_or_pull_1.ToLower() == "pull" || push_or_pull_1.ToLower() == "dpull")
-                    {
-                        if (args.Length != 6)
-                        {
-                            Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, pull, sql query, show progress (0/1)!");
-                            Environment.Exit(1);
-                        }
-                        // handle sql query
-                        if (push_or_pull_2.ToLower().Contains("delete") |
-                            push_or_pull_2.ToLower().Contains("drop") |
-                            push_or_pull_2.ToLower().Contains("insert") |
-                            push_or_pull_2.ToLower().Contains("update"))
-                        {
-                            Console.WriteLine("Only SELECT statement is allowed");
-                            Environment.Exit(1);
-                        }
+                    //else if (push_or_pull_1.ToLower() == "pull" || push_or_pull_1.ToLower() == "dpull")
+                    //{
+                    //    if (args.Length != 6)
+                    //    {
+                    //        Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, pull, sql query, show progress (0/1)!");
+                    //        Environment.Exit(1);
+                    //    }
+                    //    // handle sql query
+                    //    if (push_or_pull_2.ToLower().Contains("delete") |
+                    //        push_or_pull_2.ToLower().Contains("drop") |
+                    //        push_or_pull_2.ToLower().Contains("insert") |
+                    //        push_or_pull_2.ToLower().Contains("update"))
+                    //    {
+                    //        Console.WriteLine("Only SELECT statement is allowed");
+                    //        Environment.Exit(1);
+                    //    }
 
-                        // handle show progress
-                        string[] possible_vals = { "0", "1" };
-                        if (!possible_vals.Contains(push_or_pull_3))
-                        {
-                            Console.WriteLine("Show progress argument should be 1 or 0!");
-                            Environment.Exit(1);
-                        }
-                    }
+                    //    // handle show progress
+                    //    string[] possible_vals = { "0", "1" };
+                    //    if (!possible_vals.Contains(push_or_pull_3))
+                    //    {
+                    //        Console.WriteLine("Show progress argument should be 1 or 0!");
+                    //        Environment.Exit(1);
+                    //    }
+                    //}
                     else
                     {
                         Console.WriteLine("Have no idea what " + push_or_pull_1.ToLower() + " is. program knows only push or pull as a first argument!");
