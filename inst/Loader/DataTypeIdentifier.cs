@@ -129,7 +129,7 @@ namespace csv_to_sql_loader
                     // Check bool type
                     if (DataTypeIdentifier.IsBoolType(dt, i))
                     {
-                        sqldatatype_array[0, i] = "bool";
+                        sqldatatype_array[0, i] = "bit";
                         sqldatatype_array[1, i] = dt.Columns[i].ToString();
                         continue;
                     }
