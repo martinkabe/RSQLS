@@ -5,7 +5,7 @@
 \title{Pushing data from data.frame object into SQL table on SQL Server}
 \usage{
 push_data(connectionString, df, sqltabname, append = FALSE,
-  showprogress = FALSE)
+  showprogress = FALSE, quotes = "auto")
 }
 \arguments{
 \item{connectionString}{SQL connection string}
@@ -17,6 +17,8 @@ push_data(connectionString, df, sqltabname, append = FALSE,
 \item{append}{Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records.)}
 
 \item{showprogress}{Showing progress (default value is FALSE)}
+
+\item{quotes}{When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself or (when list columns are present) sep2[2] (see sep2 below). If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv}
 }
 \description{
 This function pushes data from data.frame object

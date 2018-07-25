@@ -68,6 +68,7 @@ replace_spaced_words <- function(str_string) {
 #' @param sqltabname SQL table name
 #' @param append Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records.)
 #' @param showprogress Showing progress (default value is FALSE)
+#' @param quotes When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself or (when list columns are present) sep2[2] (see sep2 below). If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv
 #' @note Table is automatically created if doesn't exist on SQL Server with automatically identified data types.
 #' @export
 #' @examples
@@ -79,7 +80,8 @@ push_data <- function(connectionString
                       ,df
                       ,sqltabname
                       ,append = FALSE
-                      ,showprogress = FALSE) {
+                      ,showprogress = FALSE
+                      ,quotes = "auto") {
   options(scipen=999)
   # df_name <- paste('', deparse(substitute(df)), '', sep = "")
   # if (!exists(df_name) || !is.data.frame(get(df_name))) {
@@ -115,7 +117,7 @@ push_data <- function(connectionString
     } else {
       sqltabname_prev <- sqltabname
     }
-    data.table::fwrite(df, paste(pathtocsvfiles,"\\", paste(sqltabname_prev,".csv", sep = ""), sep = ""), row.names = FALSE, sep = "\t")
+    data.table::fwrite(df, paste(pathtocsvfiles,"\\", paste(sqltabname_prev,".csv", sep = ""), sep = ""), row.names = FALSE, sep = "\t", quote = quotes)
     sql_tab_name <- paste('"', sqltabname, '"', sep = "") # '"dbo.CFTC_Disaggregated_Raw_test"'
     if (append == FALSE) append = 1 else append = 0
     delete_tab <- paste('"', append, '"', sep = "")
