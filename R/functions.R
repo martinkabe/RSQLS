@@ -68,7 +68,7 @@ replace_spaced_words <- function(str_string) {
 #' @param sqltabname SQL table name
 #' @param append Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records.)
 #' @param showprogress Showing progress (default value is FALSE)
-#' @param quotes When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself or (when list columns are present) sep2[2] (see sep2 below). If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv
+#' @param quotes When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv
 #' @note Table is automatically created if doesn't exist on SQL Server with automatically identified data types.
 #' @export
 #' @examples

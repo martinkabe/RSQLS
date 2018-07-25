@@ -18,7 +18,7 @@ push_data(connectionString, df, sqltabname, append = FALSE,
 
 \item{showprogress}{Showing progress (default value is FALSE)}
 
-\item{quotes}{When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself or (when list columns are present) sep2[2] (see sep2 below). If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv}
+\item{quotes}{When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv}
 }
 \description{
 This function pushes data from data.frame object
