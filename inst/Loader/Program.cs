@@ -69,7 +69,8 @@ namespace csv_to_sql_loader
                 // Implements table info function
                 else if (args[1].ToLower() == "tableinfo")
                 {
-                    if (!Functions.IfSQLTableExists(args[3], args[0])) {
+                    if (!Functions.IfSQLTableExists(args[3], args[0]))
+                    {
                         Console.WriteLine("Table " + args[3] + " doesn't exist.");
                         Environment.Exit(1);
                     }
@@ -222,7 +223,7 @@ namespace csv_to_sql_loader
                     Console.WriteLine("Not sure what you are trying to achieve... Please, read the documentation!");
                     Environment.Exit(1);
                 }
-                
+
                 sqltask.Stop();
                 Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
                     sqltask.Elapsed.Minutes, sqltask.Elapsed.Seconds, sqltask.Elapsed.TotalMilliseconds);

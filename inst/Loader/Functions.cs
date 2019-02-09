@@ -23,7 +23,7 @@ namespace csv_to_sql_loader
         // public static string sqldbconnection = System.Configuration.ConfigurationManager.ConnectionStrings[conStringName].ConnectionString;
 
         // based on app approval output file columns
-        
+
         public static void InsertDataIntoSQLServerUsingSQLBulkCopy_2(DataTable dtable, string sqlTableName, Int32 batch_size, string connString)
         {
             try
@@ -88,7 +88,7 @@ namespace csv_to_sql_loader
                 Environment.Exit(1);
             }
         }
-        
+
         public static void CleanUpTable(string sqlTableName, string connString)
         {
             try
@@ -176,7 +176,7 @@ namespace csv_to_sql_loader
                 Environment.Exit(1);
             }
         }
-        
+
         public static string ReturnConStringName()
         {
             ConnectionStringSettingsCollection connections = ConfigurationManager.ConnectionStrings;
@@ -256,6 +256,7 @@ namespace csv_to_sql_loader
                         else if (dr.ItemArray[1].ToString() == "smallint") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Int16)); }
                         else if (dr.ItemArray[1].ToString() == "int") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Int32)); }
                         else if (dr.ItemArray[1].ToString() == "bigint") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Int64)); }
+                        else if (dr.ItemArray[1].ToString() == "bit") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Boolean)); }
                         else if (dr.ItemArray[1].ToString() == "decimal" || dr.ItemArray[1].ToString() == "numeric") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(decimal)); }
                         else if (dr.ItemArray[1].ToString() == "uniqueidentifier") { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(Guid)); }
                         else { dt.Columns.Add(dr.ItemArray[0].ToString(), typeof(string)); }
@@ -282,15 +283,20 @@ namespace csv_to_sql_loader
                                 else if (dtr.ItemArray[1].ToString() == "int") { rows[i] = Int32.Parse(rows[i], NumberStyles.Any).ToString(); }
                                 else if (dtr.ItemArray[1].ToString() == "datetime") { rows[i] = DateTime.Parse(rows[i], null, DateTimeStyles.RoundtripKind).ToString(); }
                                 else if (dtr.ItemArray[1].ToString() == "float") { rows[i] = double.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString(); }
+                                else if (dtr.ItemArray[1].ToString() == "bit")
+                                {
+                                    Boolean.TryParse(StringExtensions.ToBoolean(rows[i]).ToString(), out bool parsedValue);
+                                    rows[i] = parsedValue.ToString();
+                                }
                                 else if (dtr.ItemArray[1].ToString() == "real") { rows[i] = Single.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString(); }
                                 else if (dtr.ItemArray[1].ToString() == "decimal" || dtr.ItemArray[1].ToString() == "numeric") { rows[i] = Decimal.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString(); }
-                                else { rows[i] = rows[i].ToString().Replace("\"",""); }
+                                else { rows[i] = rows[i].ToString().Replace("\"", ""); }
                             }
                         }
 
                         dt.Rows.Add(rows);
                         batchsize += 1;
-                        
+
                         if (batchsize == flushed_batch_size)
                         {
                             InsertDataIntoSQLServerUsingSQLBulkCopy_2(dt, tabName, flushed_batch_size, connString);
@@ -373,13 +379,13 @@ namespace csv_to_sql_loader
             char sep;
             using (StreamReader sr = new StreamReader(strFilePath))
             {
-                IList<char> seps = new List<char>() { '\t', ',', '.', ';'};
-                sep = Convert.ToChar(AutoDetectCsvSeparator.Detect(sr, dt.Rows.Count*10000, seps).ToString());
+                IList<char> seps = new List<char>() { '\t', ',', '.', ';' };
+                sep = Convert.ToChar(AutoDetectCsvSeparator.Detect(sr, dt.Rows.Count * 10000, seps).ToString());
 
                 if (sep != '\t')
                 {
-                    Console.WriteLine("Try to reduce '"+ sep + "' in your data.frame or data.table you are trying to push to SQL Server,\nbecause tabulator is used as a separator!");
-                    Console.WriteLine("Use something like gsub('"+ sep + "', ' ', df.column) in R");
+                    Console.WriteLine("Try to reduce '" + sep + "' in your data.frame or data.table you are trying to push to SQL Server,\nbecause tabulator is used as a separator!");
+                    Console.WriteLine("Use something like gsub('" + sep + "', ' ', df.column) in R");
                     Environment.Exit(1);
                 }
 
@@ -542,7 +548,7 @@ namespace csv_to_sql_loader
                                 {
                                     sb.Append(row[i].ToString());
                                     sb.Append(i == dataTable.Columns.Count - 1 ? "\n" : sep);
-                                }   
+                                }
                             }
                             counter++;
                             c_ounter++;
@@ -695,7 +701,7 @@ namespace csv_to_sql_loader
 
             for (int i = 0; i < sqldts.GetLength(1); i++)
             {
-                if (i == sqldts.GetLength(1)-1)
+                if (i == sqldts.GetLength(1) - 1)
                 {
                     createTable_string = createTable_string + "[" + sqldts[1, i] + "]" + " " + sqldts[0, i];
                 }
