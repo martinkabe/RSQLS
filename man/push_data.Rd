@@ -20,7 +20,7 @@ push_data(connectionString, df, sqltabname, append = FALSE,
 
 \item{quotes}{When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv}
 
-\item{separator}{Default is "\\t". This determines what separator is used during csv is generated.}
+\item{separator}{Default is "\t". This determines what separator is used during csv is generated.}
 }
 \description{
 This function pushes data from data.frame object

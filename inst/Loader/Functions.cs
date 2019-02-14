@@ -212,8 +212,9 @@ namespace csv_to_sql_loader
                 string str1 = string.Empty;
                 int dt_rows_count = dataTypes.Rows.Count;
 
+                char sep = get_sep(strFilePath);
                 // char sep = get_sep(strFilePath, dataTypes);
-                char sep = '\t';
+                // char sep = '\t';
 
                 using (StreamReader sr = new StreamReader(strFilePath))
                 {
@@ -374,21 +375,13 @@ namespace csv_to_sql_loader
             return table;
         }
 
-        public static char get_sep(string strFilePath, DataTable dt)
+        public static char get_sep(string strFilePath)
         {
             char sep;
             using (StreamReader sr = new StreamReader(strFilePath))
             {
-                IList<char> seps = new List<char>() { '\t', ',', '.', ';' };
-                sep = Convert.ToChar(AutoDetectCsvSeparator.Detect(sr, dt.Rows.Count * 10000, seps).ToString());
-
-                if (sep != '\t')
-                {
-                    Console.WriteLine("Try to reduce '" + sep + "' in your data.frame or data.table you are trying to push to SQL Server,\nbecause tabulator is used as a separator!");
-                    Console.WriteLine("Use something like gsub('" + sep + "', ' ', df.column) in R");
-                    Environment.Exit(1);
-                }
-
+                IList<char> seps = new List<char>() { '\t', ',', '.', ';', '~', '|', '^' };
+                sep = Convert.ToChar(AutoDetectCsvSeparator.Detect(sr, 250000, seps).ToString());
             }
             return sep;
         }
