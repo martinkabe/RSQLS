@@ -352,7 +352,7 @@ namespace csv_to_sql_loader
                             // Console.WriteLine("Be sure " + tableName + " exists on SQL Server. Or you might forgot specify schema - e.g. dbo.TableName\n(DB schema has to be there because one table could exist under more than one different schemas!!)");
                             Console.WriteLine("Table " + tableName + " doesn't exit in database. Creating it...");
                             // Creating table function should be here:
-                            Functions.CreateSQLTable(csvFilePath, 250001, tableName, connectionString);
+                            Functions.CreateSQLTable(csvFilePath, 250001, tableName, connectionString, separator);
                             Console.WriteLine("Table " + tableName + " has been created.");
                             newtable = true;
                             // Environment.Exit(1);

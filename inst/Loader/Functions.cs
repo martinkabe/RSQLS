@@ -679,16 +679,14 @@ namespace csv_to_sql_loader
             }
         }
 
-        public static void CreateSQLTable(string pathtocsv, Int32 rowstoestimatedatatype, string tablename, string connstring)
+        public static void CreateSQLTable(string pathtocsv, Int32 rowstoestimatedatatype, string tablename, string connstring, char sep)
         {
-            char separator;
             using (StreamReader sr = new StreamReader(pathtocsv))
             {
                 // IList<char> seps = new List<char>() { '\t', ',', '.', ';' };
                 //separator = Convert.ToChar(AutoDetectCsvSeparator.Detect(sr, 100000, seps).ToString());
-                separator = '\t';
             }
-            string[,] sqldts = DataTypeIdentifier.SQLDataTypes(pathtocsv, rowstoestimatedatatype, separator);
+            string[,] sqldts = DataTypeIdentifier.SQLDataTypes(pathtocsv, rowstoestimatedatatype, sep);
 
             string createTable_string = string.Empty;
 
