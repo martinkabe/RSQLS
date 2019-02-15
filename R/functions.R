@@ -83,7 +83,7 @@ push_data <- function(connectionString
                       ,append = FALSE
                       ,showprogress = FALSE
                       ,quotes = "auto"
-                      ,separator = '\t') {
+                      ,separator = "\t") {
   options(scipen=999)
   # df_name <- paste('', deparse(substitute(df)), '', sep = "")
   # if (!exists(df_name) || !is.data.frame(get(df_name))) {
