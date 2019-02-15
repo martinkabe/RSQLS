@@ -77,13 +77,17 @@ replace_spaced_words <- function(str_string) {
 #' push_data(connectionString, dataFrame, "dbo.TableName")
 #' }
 #' @note How to set up SQL Server connection string see \link{set_connString}.
+
+df=data.frame(Name=c("Martin","Michal"),
+              Age=c(14,15), stringsAsFactors = F)
+
 push_data <- function(connectionString
                       ,df
                       ,sqltabname
                       ,append = FALSE
                       ,showprogress = FALSE
                       ,quotes = "auto"
-                      ,separator = "\t") {
+                      ,separator = "|") {
   options(scipen=999)
   # df_name <- paste('', deparse(substitute(df)), '', sep = "")
   # if (!exists(df_name) || !is.data.frame(get(df_name))) {
@@ -126,6 +130,7 @@ push_data <- function(connectionString
     operation <- paste('"push"', sep = "")
     if (showprogress == FALSE) showprogress = 0 else showprogress = 1
     show_progress <- paste('"', showprogress, '"', sep = "")
+    separator <- paste('"', separator, '"', sep = "")
     real_pathtocsvfile <- paste('"', pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""),'"', sep = "")
     file_to_be_deleted <- paste(pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""), sep = "")
     ss <- paste('', pathtocsvloader, " ", connectionString, " ", real_pathtocsvfile, " ", sql_tab_name, " ", operation, " ", delete_tab, " ", show_progress, " ", separator, sep = "")

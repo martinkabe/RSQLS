@@ -19,7 +19,7 @@ namespace csv_to_sql_loader
             //Functions.WriteFromDBToCSV("select top 200000 * from [dbo].[DataTable]", "c:\\data.csv", true,
             //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=DatabaseName;Integrated Security=True;");
 
-            //string[] args = { "Data Source=LAPTOP-A0UR3NN0\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "c:\\data.csv",
+            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=DatabaseName;Integrated Security=True;", "c:\\data.csv",
             //    "[dbo].[test.Table]", "push", "0", "0", "|" };
 
             //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;", "dbinfo",
@@ -481,7 +481,7 @@ namespace csv_to_sql_loader
             }
             else
             {
-                Console.WriteLine("Invalid no of arguments should be 2, 4 or 6! Please, read documentation!");
+                Console.WriteLine("Invalid no of arguments should be 2, 4 or 7! Please, read documentation!");
                 Environment.Exit(1);
             }
             Environment.Exit(0);
