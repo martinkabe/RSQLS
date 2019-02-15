@@ -11,7 +11,7 @@ namespace csv_to_sql_loader
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
             //Functions.CreateSQLTable("c:\\test.csv", 200001, "[dbo].[mv.New.Table]",
             //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=DatabaseName;Integrated Security=True;");
@@ -19,8 +19,8 @@ namespace csv_to_sql_loader
             //Functions.WriteFromDBToCSV("select top 200000 * from [dbo].[DataTable]", "c:\\data.csv", true,
             //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=DatabaseName;Integrated Security=True;");
 
-            string[] args = { "Data Source=LAPTOP-A0UR3NN0\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "c:\\data.csv",
-                "[dbo].[test.Table]", "push", "0", "0", "|" };
+            //string[] args = { "Data Source=LAPTOP-A0UR3NN0\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "c:\\data.csv",
+            //    "[dbo].[test.Table]", "push", "0", "0", "|" };
 
             //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;", "dbinfo",
             //    "c:\\temp.csv", null };
