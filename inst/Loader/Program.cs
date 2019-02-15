@@ -11,18 +11,16 @@ namespace csv_to_sql_loader
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            // https://gallery.technet.microsoft.com/scriptcenter/Import-Large-CSVs-into-SQL-216223d9
-
             //Functions.CreateSQLTable("c:\\test.csv", 200001, "[dbo].[mv.New.Table]",
-            //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
+            //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=DatabaseName;Integrated Security=True;");
 
             //Functions.WriteFromDBToCSV("select top 200000 * from [dbo].[DataTable]", "c:\\data.csv", true,
-            //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;");
+            //    "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=DatabaseName;Integrated Security=True;");
 
-            //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "c:\\data.csv",
-            //    "[dbo].[test.Table]", "push", "0", "0" };
+            string[] args = { "Data Source=LAPTOP-A0UR3NN0\\SQLEXPRESS;Initial Catalog=RSQLS;Integrated Security=True;", "c:\\data.csv",
+                "[dbo].[test.Table]", "push", "0", "0", "|" };
 
             //string[] args = { "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;", "dbinfo",
             //    "c:\\temp.csv", null };
@@ -229,7 +227,7 @@ namespace csv_to_sql_loader
                     sqltask.Elapsed.Minutes, sqltask.Elapsed.Seconds, sqltask.Elapsed.TotalMilliseconds);
                 Environment.Exit(0);
             }
-            else if (args.Length == 6)
+            else if (args.Length == 7)
             {
                 string connectionString = args[0]; // "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;"
                 string csvFilePath = args[1]; // "C:\\pathToFile\\data.csv"
@@ -239,6 +237,7 @@ namespace csv_to_sql_loader
                 string push_or_pull_1 = args[3]; // "push"
                 string push_or_pull_2 = args[4]; // "1"
                 string push_or_pull_3 = args[5]; // "1"
+                char separator = char.Parse(args[6]); // this is for separator
 
                 #region Input validation
                 // Validate inputs:
@@ -254,9 +253,9 @@ namespace csv_to_sql_loader
 
                     if (push_or_pull_1.ToLower() == "push")
                     {
-                        if (args.Length != 6)
+                        if (args.Length != 7)
                         {
-                            Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, push, remove tab (0/1), show progress (0/1)!");
+                            Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, push, remove tab (0/1), show progress (0/1)!, separator");
                             Environment.Exit(1);
                         }
                         // handle for remove tab and show progress
@@ -390,17 +389,17 @@ namespace csv_to_sql_loader
                                 Console.WriteLine("Pushing data into " + tableName + " table with showing progress");
                                 if (newtable)
                                 {
-                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, true, connectionString, false);
+                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, true, connectionString, false, separator);
                                 }
                                 else
                                 {
-                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, true, connectionString, true);
+                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, true, connectionString, true, separator);
                                 }
                             }
                             else
                             {
                                 Console.WriteLine("Pushing data into " + tableName + " table with showing progress");
-                                Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, true, connectionString, false);
+                                Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, true, connectionString, false, separator);
                             }
                         }
                         else
@@ -410,17 +409,17 @@ namespace csv_to_sql_loader
                                 Console.WriteLine("Pushing data into " + tableName + " table without showing progress");
                                 if (newtable)
                                 {
-                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, false);
+                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, false, separator);
                                 }
                                 else
                                 {
-                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, true);
+                                    Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, true, separator);
                                 }
                             }
                             else
                             {
                                 Console.WriteLine("Pushing data into " + tableName + " table without showing progress");
-                                Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, false);
+                                Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, false, separator);
                             }
                         }
                         push.Stop();

@@ -202,7 +202,7 @@ namespace csv_to_sql_loader
         }
 
         public static void ConvertCSVtoDataTable(string strFilePath, string tabName, Int32 flushed_batch_size,
-                                                 bool showprogress, string connString, bool removeTab)
+                                                 bool showprogress, string connString, bool removeTab, char sep)
         {
             DataTable dt = new DataTable();
             Int64 rowsCount = 0;
@@ -212,9 +212,9 @@ namespace csv_to_sql_loader
                 string str1 = string.Empty;
                 int dt_rows_count = dataTypes.Rows.Count;
 
-                char sep = get_sep(strFilePath);
                 // char sep = get_sep(strFilePath, dataTypes);
                 // char sep = '\t';
+                Console.WriteLine("[" + sep.ToString() + "]" + " is used as separator.");
 
                 using (StreamReader sr = new StreamReader(strFilePath))
                 {

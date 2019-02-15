@@ -128,7 +128,7 @@ push_data <- function(connectionString
     show_progress <- paste('"', showprogress, '"', sep = "")
     real_pathtocsvfile <- paste('"', pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""),'"', sep = "")
     file_to_be_deleted <- paste(pathtocsvfiles, paste(sqltabname_prev, ".csv", sep = ""), sep = "")
-    ss <- paste('', pathtocsvloader, " ", connectionString, " ", real_pathtocsvfile, " ", sql_tab_name, " ", operation, " ", delete_tab, " ", show_progress, sep = "")
+    ss <- paste('', pathtocsvloader, " ", connectionString, " ", real_pathtocsvfile, " ", sql_tab_name, " ", operation, " ", delete_tab, " ", show_progress, " ", separator, sep = "")
     # Call shell command
     oldw <- getOption("warn")
     options(warn = -1)
