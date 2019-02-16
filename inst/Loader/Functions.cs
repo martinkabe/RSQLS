@@ -214,56 +214,37 @@ namespace csv_to_sql_loader
 
                 // char sep = get_sep(strFilePath, dataTypes);
                 // char sep = '\t';
-                char[] seps = { '\t', ',', '.', ';', '|', '~', '^', ' '};
-                foreach (char sprt in seps)
+                switch (sep)
                 {
-                    if (sprt == sep)
-                    {
+                    case '\t':
                         Console.WriteLine("Tab is used as separator.");
                         break;
-                    }
-                    else if (sprt == sep)
-                    {
+                    case ',':
                         Console.WriteLine("Comma is used as separator.");
                         break;
-                    }
-                    else if (sprt == sep)
-                    {
+                    case '.':
                         Console.WriteLine("Dot is used as separator.");
                         break;
-                    }   
-                    else if (sprt == sep)
-                    {
+                    case ';':
                         Console.WriteLine("Semi-colon is used as separator.");
                         break;
-                    }
-                    else if (sprt == sep)
-                    {
+                    case '|':
                         Console.WriteLine("Pipe is used as separator.");
                         break;
-                    }
-                    else if (sprt == sep)
-                    {
+                    case '~':
                         Console.WriteLine("Tilde is used as separator.");
                         break;
-                    }
-                    else if (sprt == sep)
-                    {
+                    case '^':
                         Console.WriteLine("Caret is used as separator.");
                         break;
-                    }
-                    else if (sprt== sep)
-                    {
+                    case ' ':
                         Console.WriteLine("Space is used as separator.");
                         break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("[" + sep + "] is used as separator.");
+                    default:
+                        Console.WriteLine("Unknown separator is used.");
                         break;
-                    }
                 }
-                
+                                
                 using (StreamReader sr = new StreamReader(strFilePath))
                 {
                     string[] headers = sr.ReadLine().Split(sep);
