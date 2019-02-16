@@ -241,7 +241,7 @@ namespace csv_to_sql_loader
                         Console.WriteLine("Space is used as separator.");
                         break;
                     default:
-                        Console.WriteLine("Unknown separator is used.");
+                        Console.WriteLine("'" + sep + "'" + " separator is used.");
                         break;
                 }
                                 
