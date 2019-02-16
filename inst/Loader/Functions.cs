@@ -217,27 +217,44 @@ namespace csv_to_sql_loader
                 char[] seps = { '\t', ',', '.', ';', '|', '~', '^', ' '};
                 foreach (char sprt in seps)
                 {
-                    if (sprt=='\t')
+                    if (sprt == '\t')
+                    {
                         Console.WriteLine("Tab is used as separator.");
-                    else if (sprt==',')
+                    }
+                    else if (sprt == ',')
+                    {
                         Console.WriteLine("Comma is used as separator.");
-                    else if (sprt=='.')
+                    }
+                    else if (sprt == '.')
+                    {
                         Console.WriteLine("Dot is used as separator.");
-                    else if (sprt==';')
+                    }   
+                    else if (sprt == ';')
+                    {
                         Console.WriteLine("Semi-colon is used as separator.");
-                    else if (sprt=='|')
+                    }
+                    else if (sprt == '|')
+                    {
                         Console.WriteLine("Pipe is used as separator.");
-                    else if (sprt=='~')
+                    }
+                    else if (sprt == '~')
+                    {
                         Console.WriteLine("Tilde is used as separator.");
-                    else if (sprt=='^')
+                    }
+                    else if (sprt == '^')
+                    {
                         Console.WriteLine("Caret is used as separator.");
+                    }
                     else if (sprt==' ')
+                    {
                         Console.WriteLine("Space is used as separator.");
+                    }
                     else
+                    {
                         Console.WriteLine("[" + sprt + "] is used as separator.");
+                    }
                 }
                 
-
                 using (StreamReader sr = new StreamReader(strFilePath))
                 {
                     string[] headers = sr.ReadLine().Split(sep);
