@@ -4,7 +4,7 @@
 \alias{push_data}
 \title{Pushing data from data.frame object into SQL table on SQL Server}
 \usage{
-push_data(connectionString, df, sqltabname, append = TRUE,
+push_data(connectionString, df, sqltabname, append = FALSE,
   showprogress = FALSE, quotes = "auto", separator = "|")
 }
 \arguments{
@@ -14,7 +14,7 @@ push_data(connectionString, df, sqltabname, append = TRUE,
 
 \item{sqltabname}{SQL table name.}
 
-\item{append}{Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records. Default value is set to \strong{TRUE}.)}
+\item{append}{Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records. Default value is set to \strong{FALSE}.)}
 
 \item{showprogress}{Showing progress (default value is set to \strong{FALSE}.)}
 
