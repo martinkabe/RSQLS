@@ -8,19 +8,19 @@ push_data(connectionString, df, sqltabname, append = FALSE,
   showprogress = FALSE, quotes = "auto", separator = "|")
 }
 \arguments{
-\item{connectionString}{SQL connection string}
+\item{connectionString}{SQL connection string.}
 
-\item{df}{Data.Frame to be pushed into SQL table}
+\item{df}{Data.Frame to be pushed into SQL table.}
 
-\item{sqltabname}{SQL table name}
+\item{sqltabname}{SQL table name.}
 
-\item{append}{Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records.)}
+\item{append}{Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records. Default value is set to \strong{FALSE}.)}
 
-\item{showprogress}{Showing progress (default value is FALSE)}
+\item{showprogress}{Showing progress (default value is set to \strong{FALSE}.)}
 
-\item{quotes}{When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv}
+\item{quotes}{When \strong{"auto"}, character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If \strong{FALSE} the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If \strong{TRUE} double quotes are always included other than around numeric fields, as write.csv. Default value is set to \strong{"auto"}.}
 
-\item{separator}{Default is "|". This determines what separator is used during csv is generated.}
+\item{separator}{Default is \strong{"|"}. This determines what separator is used during csv is generated.}
 }
 \description{
 This function pushes data from data.frame object

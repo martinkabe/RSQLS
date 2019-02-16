@@ -7,10 +7,10 @@
 get_DB_info(connectionString)
 }
 \arguments{
-\item{connectionString}{Connection string to SQL server}
+\item{connectionString}{Connection string to SQL server.}
 }
 \value{
-Returns data.frame and data.table
+Returns data.frame and data.table object.
 }
 \description{
 This function retrieves basic info about database defined

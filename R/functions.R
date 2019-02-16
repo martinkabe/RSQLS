@@ -5,12 +5,12 @@
 #'
 #' This function defines SQL Server connection string
 #' from function parameters.
-#' @param datasource Server name
-#' @param database Database name
-#' @param usr Username
-#' @param pwd Password
+#' @param datasource Server name.
+#' @param database Database name.
+#' @param usr User name.
+#' @param pwd Password.
 #' @note If username and password missing or empty \strong{Integrated Security=True} is used in connection string instead.
-#' @return Connection string
+#' @return Connection string.
 #' @export
 #' @examples
 #' set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
@@ -63,13 +63,13 @@ replace_spaced_words <- function(str_string) {
 #'
 #' This function pushes data from data.frame object
 #' into SQL table on SQL server.
-#' @param connectionString SQL connection string
-#' @param df Data.Frame to be pushed into SQL table
-#' @param sqltabname SQL table name
-#' @param append Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records.)
-#' @param showprogress Showing progress (default value is FALSE)
-#' @param quotes When "auto", character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If FALSE the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If TRUE double quotes are always included other than around numeric fields, as write.csv
-#' @param separator Default is "|". This determines what separator is used during csv is generated.
+#' @param connectionString SQL connection string.
+#' @param df Data.Frame to be pushed into SQL table.
+#' @param sqltabname SQL table name.
+#' @param append Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records. Default value is set to \strong{FALSE}.)
+#' @param showprogress Showing progress (default value is set to \strong{FALSE}.)
+#' @param quotes When \strong{"auto"}, character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If \strong{FALSE} the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If \strong{TRUE} double quotes are always included other than around numeric fields, as write.csv. Default value is set to \strong{"auto"}.
+#' @param separator Default is \strong{"|"}. This determines what separator is used during csv is generated.
 #' @note Table is automatically created if doesn't exist on SQL Server with automatically identified data types.
 #' @export
 #' @examples
@@ -156,10 +156,10 @@ push_data <- function(connectionString
 #'
 #' This function pulls the data from SQL server
 #' via SQL query and returns data.table and data.frame object
-#' @param connectionString Connection string to SQL server
-#' @param sqltask SQL query for selecting data on SQL server
-#' @param showprogress Showing progress (default value is FALSE)
-#' @return Returns data.frame and data.table
+#' @param connectionString Connection string to SQL server.
+#' @param sqltask SQL query for selecting data on SQL server.
+#' @param showprogress Showing progress (default value is set to \strong{FALSE}).
+#' @return Returns data.frame and data.table object.
 #' @export
 #' @examples
 #' \dontrun{
@@ -236,10 +236,10 @@ pull_data <- function(connectionString
 #'
 #' This function pulls the data from SQL server directly into flat file via StreamReader class
 #' via SQL query and returns data.table and data.frame object
-#' @param connectionString Connection string to SQL server
-#' @param sqltask SQL query for selecting data on SQL server
-#' @param showprogress Showing progress (default value is FALSE)
-#' @return Returns data.frame and data.table
+#' @param connectionString Connection string to SQL server.
+#' @param sqltask SQL query for selecting data on SQL server.
+#' @param showprogress Showing progress (default value is \strong{FALSE}).
+#' @return Returns data.frame and data.table object.
 #' @export
 #' @examples
 #' \dontrun{
@@ -316,8 +316,8 @@ dpull_data <- function(connectionString
 #'
 #' This function allows user to drop table, delete rows in table
 #' or create new table on SQL Server
-#' @param connectionString Connection string to SQL server
-#' @param sqltask SQL query for retrieving data from SQL server
+#' @param connectionString Connection string to SQL server.
+#' @param sqltask SQL query for retrieving data from SQL server.
 #' @export
 #' @examples
 #' \dontrun{
@@ -362,8 +362,8 @@ send_SQL_task <- function(connectionString
 #'
 #' This function retrieves basic info about database defined
 #' in SQL Server connection string.
-#' @param connectionString Connection string to SQL server
-#' @return Returns data.frame and data.table
+#' @param connectionString Connection string to SQL server.
+#' @return Returns data.frame and data.table object.
 #' @export
 #' @examples
 #' \dontrun{
@@ -430,9 +430,9 @@ get_DB_info <- function(connectionString) {
 #' Get table info
 #'
 #' This function retrieves basic info about table
-#' @param connectionString Connection string to SQL server
-#' @param sqltabname SQL table name
-#' @return Returns data.frame and data.table
+#' @param connectionString Connection string to SQL server.
+#' @param sqltabname SQL table name.
+#' @return Returns data.frame and data.table object.
 #' @export
 #' @examples
 #' \dontrun{

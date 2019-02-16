@@ -7,12 +7,12 @@
 get_table_info(connectionString, sqltabname)
 }
 \arguments{
-\item{connectionString}{Connection string to SQL server}
+\item{connectionString}{Connection string to SQL server.}
 
-\item{sqltabname}{SQL table name}
+\item{sqltabname}{SQL table name.}
 }
 \value{
-Returns data.frame and data.table
+Returns data.frame and data.table object.
 }
 \description{
 This function retrieves basic info about table

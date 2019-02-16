@@ -7,9 +7,9 @@
 send_SQL_task(connectionString, sqltask)
 }
 \arguments{
-\item{connectionString}{Connection string to SQL server}
+\item{connectionString}{Connection string to SQL server.}
 
-\item{sqltask}{SQL query for retrieving data from SQL server}
+\item{sqltask}{SQL query for retrieving data from SQL server.}
 }
 \description{
 This function allows user to drop table, delete rows in table

@@ -7,16 +7,16 @@
 set_connString(datasource, database, usr, pwd)
 }
 \arguments{
-\item{datasource}{Server name}
+\item{datasource}{Server name.}
 
-\item{database}{Database name}
+\item{database}{Database name.}
 
-\item{usr}{Username}
+\item{usr}{User name.}
 
-\item{pwd}{Password}
+\item{pwd}{Password.}
 }
 \value{
-Connection string
+Connection string.
 }
 \description{
 This function defines SQL Server connection string

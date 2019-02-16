@@ -7,14 +7,14 @@
 pull_data(connectionString, sqltask, showprogress = FALSE)
 }
 \arguments{
-\item{connectionString}{Connection string to SQL server}
+\item{connectionString}{Connection string to SQL server.}
 
-\item{sqltask}{SQL query for selecting data on SQL server}
+\item{sqltask}{SQL query for selecting data on SQL server.}
 
-\item{showprogress}{Showing progress (default value is FALSE)}
+\item{showprogress}{Showing progress (default value is set to \strong{FALSE}).}
 }
 \value{
-Returns data.frame and data.table
+Returns data.frame and data.table object.
 }
 \description{
 This function pulls the data from SQL server
