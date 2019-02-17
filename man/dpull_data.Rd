@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{dpull_data}
 \alias{dpull_data}
-\title{Direct pull data from SQL server via SQL query into flat file with StreamReader class}
+\title{Direct pull data from SQL server via SQL query into flat file with StreamReader class.}
 \usage{
 dpull_data(connectionString, sqltask, showprogress = FALSE)
 }
@@ -18,7 +18,7 @@ Returns data.frame and data.table object.
 }
 \description{
 This function pulls the data from SQL server directly into flat file via StreamReader class
-via SQL query and returns data.table and data.frame object
+via SQL query and returns data.table and data.frame object.
 }
 \note{
 How to set up SQL Server connection string see \link{set_connString}.

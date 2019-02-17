@@ -15,7 +15,7 @@ get_table_info(connectionString, sqltabname)
 Returns data.frame and data.table object.
 }
 \description{
-This function retrieves basic info about table
+This function retrieves basic info about table.
 }
 \note{
 How to set up SQL Server connection string see \link{set_connString}.

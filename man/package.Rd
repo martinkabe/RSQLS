@@ -15,7 +15,7 @@ get_DB_info(connectionString)
 get_table_info(connectionString, "dbo.tableName")
 }
 \description{
-Package for interactive work with SQL Server
+Package for interactive work with SQL Server.
 \describe{
 \item{\link{push_data}}{Pushing data into SQL Server.}
 \item{\link{pull_data}}{Pulling data from SQL Server into StringBuilder and then into flat file.}

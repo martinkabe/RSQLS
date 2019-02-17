@@ -1,16 +1,16 @@
 
 # RSQLS functions - SQL part -------------------------------------------
 
-#' Create connection string from function parameters
+#' Create connection string from function parameters.
 #'
-#' This function defines SQL Server connection string
+#' This function defines SQL Server connection string.
 #' from function parameters.
 #' @param datasource Server name.
 #' @param database Database name.
-#' @param usr User name.
-#' @param pwd Password.
+#' @param usr User name for authentication.
+#' @param pwd Password for authentication.
 #' @note If username and password missing or empty \strong{Integrated Security=True} is used in connection string instead.
-#' @return Connection string.
+#' @return SQL Server connection string.
 #' @export
 #' @examples
 #' set_connString("LAPTOP-USER\\SQLEXPRESS", "Database_Name")
@@ -59,7 +59,7 @@ replace_spaced_words <- function(str_string) {
 
 # Push data into SQL table ------------------------------------------------
 
-#' Pushing data from data.frame object into SQL table on SQL Server
+#' Pushing data from data.frame object into SQL table on SQL Server.
 #'
 #' This function pushes data from data.frame object
 #' into SQL table on SQL server.
@@ -67,7 +67,7 @@ replace_spaced_words <- function(str_string) {
 #' @param df Data.Frame to be pushed into SQL table.
 #' @param sqltabname SQL table name.
 #' @param append Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records. Default value is set to \strong{TRUE}.)
-#' @param showprogress Showing progress (default value is set to \strong{FALSE}.)
+#' @param showprogress Showing progress (default value is set to \strong{FALSE}).
 #' @param quotes When \strong{"auto"}, character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If \strong{FALSE} the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If \strong{TRUE} double quotes are always included other than around numeric fields, as write.csv. Default value is set to \strong{"auto"}.
 #' @param separator Default is \strong{"|"}. This determines what separator is used during csv is generated.
 #' @note Table is automatically created if doesn't exist on SQL Server with automatically identified data types.
@@ -232,10 +232,10 @@ pull_data <- function(connectionString
 
 # dPull data from SQL table ------------------------------------------------
 
-#' Direct pull data from SQL server via SQL query into flat file with StreamReader class
+#' Direct pull data from SQL server via SQL query into flat file with StreamReader class.
 #'
 #' This function pulls the data from SQL server directly into flat file via StreamReader class
-#' via SQL query and returns data.table and data.frame object
+#' via SQL query and returns data.table and data.frame object.
 #' @param connectionString Connection string to SQL server.
 #' @param sqltask SQL query for selecting data on SQL server.
 #' @param showprogress Showing progress (default value is \strong{FALSE}).
@@ -315,7 +315,7 @@ dpull_data <- function(connectionString
 #' Drop, delete or create table
 #'
 #' This function allows user to drop table, delete rows in table
-#' or create new table on SQL Server
+#' or create new table on SQL Server.
 #' @param connectionString Connection string to SQL server.
 #' @param sqltask SQL query for retrieving data from SQL server.
 #' @export
@@ -429,7 +429,7 @@ get_DB_info <- function(connectionString) {
 
 #' Get table info
 #'
-#' This function retrieves basic info about table
+#' This function retrieves basic info about table.
 #' @param connectionString Connection string to SQL server.
 #' @param sqltabname SQL table name.
 #' @return Returns data.frame and data.table object.
@@ -500,7 +500,7 @@ get_table_info <- function(connectionString
 #' @name package
 #' @aliases RSQLS
 #' @title RSQLS package
-#' @description Package for interactive work with SQL Server
+#' @description Package for interactive work with SQL Server.
 #' \describe{
 #' \item{\link{push_data}}{Pushing data into SQL Server.}
 #' \item{\link{pull_data}}{Pulling data from SQL Server into StringBuilder and then into flat file.}

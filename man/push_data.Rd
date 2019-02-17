@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{push_data}
 \alias{push_data}
-\title{Pushing data from data.frame object into SQL table on SQL Server}
+\title{Pushing data from data.frame object into SQL table on SQL Server.}
 \usage{
 push_data(connectionString, df, sqltabname, append = TRUE,
   showprogress = FALSE, quotes = "auto", separator = "|")
@@ -16,7 +16,7 @@ push_data(connectionString, df, sqltabname, append = TRUE,
 
 \item{append}{Append new rows (If \strong{append == TRUE} then appending new rows into existing SQL table. If \strong{append == FALSE} then deletes rows in existing SQL table and appends new records. Default value is set to \strong{TRUE}.)}
 
-\item{showprogress}{Showing progress (default value is set to \strong{FALSE}.)}
+\item{showprogress}{Showing progress (default value is set to \strong{FALSE}).}
 
 \item{quotes}{When \strong{"auto"}, character fields, factor fields and column names will only be surrounded by double quotes when they need to be; i.e., when the field contains the separator sep, a line ending \\n, the double quote itself. If \strong{FALSE} the fields are not wrapped with quotes even if this would break the CSV due to the contents of the field. If \strong{TRUE} double quotes are always included other than around numeric fields, as write.csv. Default value is set to \strong{"auto"}.}
 

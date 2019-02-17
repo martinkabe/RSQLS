@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{set_connString}
 \alias{set_connString}
-\title{Create connection string from function parameters}
+\title{Create connection string from function parameters.}
 \usage{
 set_connString(datasource, database, usr, pwd)
 }
@@ -11,15 +11,15 @@ set_connString(datasource, database, usr, pwd)
 
 \item{database}{Database name.}
 
-\item{usr}{User name.}
+\item{usr}{User name for authentication.}
 
-\item{pwd}{Password.}
+\item{pwd}{Password for authentication.}
 }
 \value{
-Connection string.
+SQL Server connection string.
 }
 \description{
-This function defines SQL Server connection string
+This function defines SQL Server connection string.
 from function parameters.
 }
 \note{

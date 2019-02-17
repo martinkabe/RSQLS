@@ -13,7 +13,7 @@ send_SQL_task(connectionString, sqltask)
 }
 \description{
 This function allows user to drop table, delete rows in table
-or create new table on SQL Server
+or create new table on SQL Server.
 }
 \note{
 How to set up SQL Server connection string see \link{set_connString}.
