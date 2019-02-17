@@ -211,37 +211,45 @@ namespace csv_to_sql_loader
                 DataTable dataTypes = ExtractDataTypesFromSQLTable(tabName, connString);
                 string str1 = string.Empty;
                 int dt_rows_count = dataTypes.Rows.Count;
-
-                // char sep = get_sep(strFilePath, dataTypes);
-                // char sep = '\t';
+                string sep_name = string.Empty;
+                
                 switch (sep)
                 {
                     case '\t':
                         Console.WriteLine("Tab is used as separator.");
+                        sep_name = "tab";
                         break;
                     case ',':
                         Console.WriteLine("Comma is used as separator.");
+                        sep_name = "comma";
                         break;
                     case '.':
                         Console.WriteLine("Dot is used as separator.");
+                        sep_name = "dot";
                         break;
                     case ';':
                         Console.WriteLine("Semi-colon is used as separator.");
+                        sep_name = "semi-colon";
                         break;
                     case '|':
                         Console.WriteLine("Pipe is used as separator.");
+                        sep_name = "pipe";
                         break;
                     case '~':
                         Console.WriteLine("Tilde is used as separator.");
+                        sep_name = "tilde";
                         break;
                     case '^':
                         Console.WriteLine("Caret is used as separator.");
+                        sep_name = "caret";
                         break;
                     case ' ':
                         Console.WriteLine("Space is used as separator.");
+                        sep_name = "space";
                         break;
                     default:
                         Console.WriteLine("'" + sep + "'" + " separator is used.");
+                        sep_name = sep.ToString();
                         break;
                 }
                                 
@@ -251,9 +259,9 @@ namespace csv_to_sql_loader
 
                     if (headers.Length != dt_rows_count)
                     {
-                        Console.WriteLine("CSV file has different count of columns than table " + tabName + "!!!");
+                        Console.WriteLine("CSV file has different count of columns than table " + tabName + "!");
                         Console.WriteLine("Data Frame has " + headers.Length + " columns and table on SQL Server has " + dt_rows_count + " columns!");
-                        Console.WriteLine("Tip: Try also check '" + sep + "' somewhere in the text in your DataFrame or DataTable you are trying to push to SQL Server,\nbecause tabulator is used as a separator!");
+                        Console.WriteLine("Tip: Try also check " + sep_name + " separator somewhere in the text in your data.frame or data.table you are trying to push to SQL Server,\nbecause " + sep_name + " is used as a separator!");
                         Environment.Exit(1);
                     }
 
@@ -264,8 +272,8 @@ namespace csv_to_sql_loader
                         //if (!headers[i].ToString().Contains(drh.ItemArray[0].ToString()))
                         if (headers[i].ToString().Replace("\"", "").ToLower() != drh.ItemArray[0].ToString().ToLower())
                         {
-                            Console.WriteLine("You need to reorder columns in your csv according to columns in table " + tabName + "!!!");
-                            Console.WriteLine("Column " + headers[i].ToString().Replace("\"", "") + " in your data.table or data.frame\ndoesn't correspond with column " + drh.ItemArray[0].ToString() + " defined in table " + tabName);
+                            Console.WriteLine("You need to reorder columns in your csv according to columns in " + tabName + " table!");
+                            Console.WriteLine("Column " + headers[i].ToString().Replace("\"", "") + " in your data.table or data.frame\ndoesn't correspond with column " + drh.ItemArray[0].ToString() + " defined in " + tabName + " table.");
                             Environment.Exit(1);
                         }
                     }
