@@ -776,5 +776,46 @@ namespace csv_to_sql_loader
                 }
             }
         }
+
+        public static void CheckDirectory(string csvFilePath, string tableName)
+        {
+            try
+            {
+                string just_csv_file_path = string.Empty;
+                string just_csv_name = string.Empty;
+                int index = csvFilePath.LastIndexOf("\\");
+                if (tableName != "null")
+                {
+                    if (index > 0)
+                    {
+                        just_csv_file_path = csvFilePath.Substring(0, index); // or index + 1 to keep slash
+                                                                              //just_csv_name = csvFilePath.Substring(csvFilePath.LastIndexOf('\\') + 1);
+                    }
+                    if (!System.IO.Directory.Exists(just_csv_file_path) || !System.IO.File.Exists(csvFilePath))
+                    {
+                        Console.WriteLine("Folder " + just_csv_file_path + "\nor\nfile name " + just_csv_name + "\ndoesn't exist. You need to create it.");
+                        Environment.Exit(1);
+                    }
+                }
+                else
+                {
+                    if (index > 0)
+                    {
+                        just_csv_file_path = csvFilePath.Substring(0, index); // or index + 1 to keep slash
+                                                                              //just_csv_name = csvFilePath.Substring(csvFilePath.LastIndexOf('\\') + 1);
+                    }
+                    if (!System.IO.Directory.Exists(just_csv_file_path))
+                    {
+                        Console.WriteLine("Folder " + just_csv_file_path + "\ndoesn't exist. You need to create it.");
+                        Environment.Exit(1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+                Environment.Exit(1);
+            }
+        }
     }
 }

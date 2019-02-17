@@ -227,7 +227,7 @@ namespace csv_to_sql_loader
                     sqltask.Elapsed.Minutes, sqltask.Elapsed.Seconds, sqltask.Elapsed.TotalMilliseconds);
                 Environment.Exit(0);
             }
-            else if (args.Length == 7)
+            else if (args.Length == 6 || args.Length == 7)
             {
                 string connectionString = args[0]; // "Data Source=LAPTOP-USERNAME\\SQLEXPRESS;Initial Catalog=Data;Integrated Security=True;"
                 string csvFilePath = args[1]; // "C:\\pathToFile\\data.csv"
@@ -237,110 +237,23 @@ namespace csv_to_sql_loader
                 string push_or_pull_1 = args[3]; // "push"
                 string push_or_pull_2 = args[4]; // "1"
                 string push_or_pull_3 = args[5]; // "1"
-                char separator = char.Parse(args[6]); // this is for separator
 
+                char separator = '\0';
+
+                if (args.Length == 7)
+                {
+                    separator = char.Parse(args[6]); // this is for separator
+                }
+                
                 #region Input validation
                 // Validate inputs:
                 // 1) Check array
                 // push: push, delete tab, show progress
                 // pull: pull, sql query, show progress
-                try
-                {
-                    //foreach (var item in args)
-                    //{
-                    //    if (item == null | item == string.Empty | item == "") { Console.WriteLine("No of arguments shouldn't be empty!"); Environment.Exit(1); }
-                    //}
 
-                    if (push_or_pull_1.ToLower() == "push")
-                    {
-                        if (args.Length != 7)
-                        {
-                            Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, push, remove tab (0/1), show progress (0/1)!, separator");
-                            Environment.Exit(1);
-                        }
-                        // handle for remove tab and show progress
-                        string[] possible_vals = { "0", "1" };
-                        if (!possible_vals.Contains(push_or_pull_2) | !possible_vals.Contains(push_or_pull_3))
-                        {
-                            Console.WriteLine("Remove tab and show progress arguments should be 1 or 0!");
-                            Environment.Exit(1);
-                        }
-                    }
-                    //else if (push_or_pull_1.ToLower() == "pull" || push_or_pull_1.ToLower() == "dpull")
-                    //{
-                    //    if (args.Length != 6)
-                    //    {
-                    //        Console.WriteLine("Incorrect no of arguments: csvFilePath, tableName, pull, sql query, show progress (0/1)!");
-                    //        Environment.Exit(1);
-                    //    }
-                    //    // handle sql query
-                    //    if (push_or_pull_2.ToLower().Contains("delete") |
-                    //        push_or_pull_2.ToLower().Contains("drop") |
-                    //        push_or_pull_2.ToLower().Contains("insert") |
-                    //        push_or_pull_2.ToLower().Contains("update"))
-                    //    {
-                    //        Console.WriteLine("Only SELECT statement is allowed");
-                    //        Environment.Exit(1);
-                    //    }
-
-                    //    // handle show progress
-                    //    string[] possible_vals = { "0", "1" };
-                    //    if (!possible_vals.Contains(push_or_pull_3))
-                    //    {
-                    //        Console.WriteLine("Show progress argument should be 1 or 0!");
-                    //        Environment.Exit(1);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine("Have no idea what " + push_or_pull_1.ToLower() + " is. program knows only push or pull as a first argument!");
-                    //    Environment.Exit(1);
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message.ToString());
-                    Environment.Exit(1);
-                }
 
                 // 2) Check the directory: for pull and push
-                try
-                {
-                    string just_csv_file_path = string.Empty;
-                    string just_csv_name = string.Empty;
-                    int index = csvFilePath.LastIndexOf("\\");
-                    if (tableName != "null")
-                    {
-                        if (index > 0)
-                        {
-                            just_csv_file_path = csvFilePath.Substring(0, index); // or index + 1 to keep slash
-                                                                                  //just_csv_name = csvFilePath.Substring(csvFilePath.LastIndexOf('\\') + 1);
-                        }
-                        if (!System.IO.Directory.Exists(just_csv_file_path) || !System.IO.File.Exists(csvFilePath))
-                        {
-                            Console.WriteLine("Folder " + just_csv_file_path + "\nor\nfile name " + just_csv_name + "\ndoesn't exist. You need to create it.");
-                            Environment.Exit(1);
-                        }
-                    }
-                    else
-                    {
-                        if (index > 0)
-                        {
-                            just_csv_file_path = csvFilePath.Substring(0, index); // or index + 1 to keep slash
-                                                                                  //just_csv_name = csvFilePath.Substring(csvFilePath.LastIndexOf('\\') + 1);
-                        }
-                        if (!System.IO.Directory.Exists(just_csv_file_path))
-                        {
-                            Console.WriteLine("Folder " + just_csv_file_path + "\ndoesn't exist. You need to create it.");
-                            Environment.Exit(1);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message.ToString());
-                    Environment.Exit(1);
-                }
+                Functions.CheckDirectory(csvFilePath, tableName);
 
                 // 3) Check if table in sql db exists:
                 try
@@ -481,7 +394,7 @@ namespace csv_to_sql_loader
             }
             else
             {
-                Console.WriteLine("Invalid no of arguments should be 2, 4 or 7! Please, read documentation!");
+                Console.WriteLine("Invalid no of arguments should be 2, 4, 6 or 7! Please, read documentation!");
                 Environment.Exit(1);
             }
             Environment.Exit(0);
