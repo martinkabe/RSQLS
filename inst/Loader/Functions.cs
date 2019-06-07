@@ -316,19 +316,150 @@ namespace csv_to_sql_loader
                             }
                             else
                             {
-                                if (dtr.ItemArray[1].ToString() == "bigint") { rows[i] = Int64.Parse(rows[i], NumberStyles.Any).ToString(); }
-                                else if (dtr.ItemArray[1].ToString() == "smallint") { rows[i] = Int16.Parse(rows[i], NumberStyles.Any).ToString(); }
-                                else if (dtr.ItemArray[1].ToString() == "int") { rows[i] = Int32.Parse(rows[i], NumberStyles.Any).ToString(); }
-                                else if (dtr.ItemArray[1].ToString() == "datetime") { rows[i] = DateTime.Parse(rows[i], null, DateTimeStyles.RoundtripKind).ToString(); }
-                                else if (dtr.ItemArray[1].ToString() == "float") { rows[i] = double.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString(); }
+                                if (dtr.ItemArray[1].ToString() == "bigint")
+                                {
+                                    try
+                                    {
+                                        rows[i] = Int64.Parse(rows[i], NumberStyles.Any).ToString();
+                                    }
+                                    catch (Exception int64ex)
+                                    {
+                                        throw new Exception("Converting to Integer64 Exception Thrown:" +
+                                            "\n  Type:    " + int64ex.GetType().Name +
+                                            "\n  Message: " + int64ex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be a bigint data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
+                                }
+
+                                else if (dtr.ItemArray[1].ToString() == "smallint")
+                                {
+                                    try
+                                    {
+                                        rows[i] = Int16.Parse(rows[i], NumberStyles.Any).ToString();
+                                    }
+                                    catch (Exception int16ex)
+                                    {
+                                        throw new Exception("Converting to Integer16 Exception Thrown:" +
+                                            "\n  Type:    " + int16ex.GetType().Name +
+                                            "\n  Message: " + int16ex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be a smallint data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
+                                }
+
+                                else if (dtr.ItemArray[1].ToString() == "int")
+                                {
+                                    try
+                                    {
+                                        rows[i] = Int32.Parse(rows[i], NumberStyles.Any).ToString();
+                                    }
+                                    catch (Exception intex)
+                                    {
+                                        throw new Exception("Converting to Integer32 Exception Thrown:" +
+                                            "\n  Type:    " + intex.GetType().Name +
+                                            "\n  Message: " + intex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be an integer data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize+1}]");
+                                    }
+                                }
+
+                                else if (dtr.ItemArray[1].ToString() == "datetime")
+                                {
+                                    try
+                                    {
+                                        rows[i] = DateTime.Parse(rows[i], null, DateTimeStyles.RoundtripKind).ToString();
+                                    }
+                                    catch (Exception datetimeex)
+                                    {
+                                        throw new Exception("Converting to datetime Exception Thrown:" +
+                                            "\n  Type:    " + datetimeex.GetType().Name +
+                                            "\n  Message: " + datetimeex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be datetime or date data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
+                                }
+
+                                else if (dtr.ItemArray[1].ToString() == "float")
+                                {
+                                    try
+                                    {
+                                        rows[i] = double.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString();
+                                    }
+                                    catch (Exception doubleex)
+                                    {
+                                        throw new Exception("Converting to double Exception Thrown:" +
+                                            "\n  Type:    " + doubleex.GetType().Name +
+                                            "\n  Message: " + doubleex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be a float data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
+                                }
+
                                 else if (dtr.ItemArray[1].ToString() == "bit")
                                 {
-                                    Boolean.TryParse(StringExtensions.ToBoolean(rows[i]).ToString(), out bool parsedValue);
-                                    rows[i] = parsedValue.ToString();
+                                    try
+                                    {
+                                        Boolean.TryParse(StringExtensions.ToBoolean(rows[i]).ToString(), out bool parsedValue);
+                                        rows[i] = parsedValue.ToString();
+                                    }
+                                    catch (Exception bitex)
+                                    {
+                                        throw new Exception("Converting to boolean Exception Thrown:" +
+                                            "\n  Type:    " + bitex.GetType().Name +
+                                            "\n  Message: " + bitex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be a bit data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
                                 }
-                                else if (dtr.ItemArray[1].ToString() == "real") { rows[i] = Single.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString(); }
-                                else if (dtr.ItemArray[1].ToString() == "decimal" || dtr.ItemArray[1].ToString() == "numeric") { rows[i] = Decimal.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString(); }
-                                else { rows[i] = rows[i].ToString().Replace("\"", ""); }
+
+                                else if (dtr.ItemArray[1].ToString() == "real")
+                                {
+                                    try
+                                    {
+                                        rows[i] = Single.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString();
+                                    }
+                                    catch (Exception singleex)
+                                    {
+                                        throw new Exception("Converting to boolean Exception Thrown:" +
+                                            "\n  Type:    " + singleex.GetType().Name +
+                                            "\n  Message: " + singleex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be a real data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
+                                }
+
+                                else if (dtr.ItemArray[1].ToString() == "decimal" || dtr.ItemArray[1].ToString() == "numeric")
+                                {
+                                    try
+                                    {
+                                        rows[i] = Decimal.Parse(rows[i], System.Globalization.NumberStyles.Any, CultureInfo.InvariantCulture).ToString();
+                                    }
+                                    catch (Exception decnumex)
+                                    {
+                                        throw new Exception("Converting to decimal Exception Thrown:" +
+                                            "\n  Type:    " + decnumex.GetType().Name +
+                                            "\n  Message: " + decnumex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be decimal or numeric data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
+                                }
+
+                                else
+                                {
+                                    try
+                                    {
+                                        rows[i] = rows[i].ToString().Replace("\"", "");
+                                    }
+                                    catch (Exception stringex)
+                                    {
+                                        throw new Exception("Converting to string Exception Thrown:" +
+                                            "\n  Type:    " + stringex.GetType().Name +
+                                            "\n  Message: " + stringex.Message +
+                                            $"\n  Check value of: [{rows[i]}] in [{headers[i].ToString().Replace("\"", "")}] column. This is supposed to be a varchar data type." +
+                                            $"\n  Row Number in this Batch: [{batchsize + 1}]");
+                                    }
+                                }
                             }
                         }
 
@@ -349,12 +480,6 @@ namespace csv_to_sql_loader
                     dt.Rows.Clear();
                 }
                 Console.WriteLine(rowsCount + " records imported");
-            }
-            catch (FormatException fex)
-            {
-                Console.WriteLine(fex.Message.ToString());
-                Console.WriteLine("Tip: there might be string between numeric data or the most likely escape character in string.\r\nCheck also scientific notation considered as string.");
-                Environment.Exit(1);
             }
             catch (Exception ex)
             {

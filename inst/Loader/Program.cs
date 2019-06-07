@@ -238,7 +238,7 @@ namespace csv_to_sql_loader
                 string push_or_pull_2 = args[4]; // "1"
                 string push_or_pull_3 = args[5]; // "1"
 
-                char separator = '\0';
+                char separator = '\0'; // for push method
 
                 if (args.Length == 7)
                 {
