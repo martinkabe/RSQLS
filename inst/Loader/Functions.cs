@@ -484,6 +484,7 @@ namespace csv_to_sql_loader
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message.ToString());
+                Environment.Exit(1);
             }
         }
 
