@@ -110,9 +110,13 @@ push_data <- function(connectionString
     return("Try it again")
   }
   if (dim(df)[1] < 1) {
-    print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", " No inserted record into table ", sqltabname, sep = ""))
+    if (show_progress) {
+      print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", " No inserted record into table ", sqltabname, sep = ""))
+    }
   } else {
-    print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", sep = ""))
+    if (show_progress) {
+      print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", sep = ""))
+    }
     # sqltabname <- gsub("\\[|\\]", "", sqltabname)
     if (length(strsplit(sqltabname,"\\.")[[1]]) > 1) {
       sqltabname_prev <- gsub("\\[|\\]", "", gsub("^[^.]*.", "", sqltabname))

@@ -314,12 +314,15 @@ namespace csv_to_sql_loader
                                 Console.WriteLine("Pushing data into " + tableName + " table with showing progress");
                                 Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, true, connectionString, false, separator);
                             }
+                            push.Stop();
+                            Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
+                                push.Elapsed.Minutes, push.Elapsed.Seconds, push.Elapsed.TotalMilliseconds);
                         }
                         else
                         {
                             if (push_or_pull_2 == "1")
                             {
-                                Console.WriteLine("Pushing data into " + tableName + " table without showing progress");
+                                //Console.WriteLine("Pushing data into " + tableName + " table without showing progress");
                                 if (newtable)
                                 {
                                     Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, false, separator);
@@ -331,13 +334,10 @@ namespace csv_to_sql_loader
                             }
                             else
                             {
-                                Console.WriteLine("Pushing data into " + tableName + " table without showing progress");
+                                //Console.WriteLine("Pushing data into " + tableName + " table without showing progress");
                                 Functions.ConvertCSVtoDataTable(csvFilePath, tableName, 100000, false, connectionString, false, separator);
                             }
                         }
-                        push.Stop();
-                        Console.WriteLine("This operation took\n" + "Minutes: {0}\nSeconds: {1}\nMilliseconds: {2}",
-                            push.Elapsed.Minutes, push.Elapsed.Seconds, push.Elapsed.TotalMilliseconds);
                     }
                     else if (push_or_pull_1.ToLower() == "pull")
                     {

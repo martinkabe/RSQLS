@@ -216,39 +216,48 @@ namespace csv_to_sql_loader
                 switch (sep)
                 {
                     case '\t':
-                        Console.WriteLine("Tab is used as separator.");
+                        if(showprogress)
+                            Console.WriteLine("Tab is used as separator.");
                         sep_name = "tab";
                         break;
                     case ',':
-                        Console.WriteLine("Comma is used as separator.");
+                        if (showprogress)
+                            Console.WriteLine("Comma is used as separator.");
                         sep_name = "comma";
                         break;
                     case '.':
-                        Console.WriteLine("Dot is used as separator.");
+                        if (showprogress)
+                            Console.WriteLine("Dot is used as separator.");
                         sep_name = "dot";
                         break;
                     case ';':
-                        Console.WriteLine("Semi-colon is used as separator.");
+                        if (showprogress)
+                            Console.WriteLine("Semi-colon is used as separator.");
                         sep_name = "semi-colon";
                         break;
                     case '|':
-                        Console.WriteLine("Pipe is used as separator.");
+                        if (showprogress)
+                            Console.WriteLine("Pipe is used as separator.");
                         sep_name = "pipe";
                         break;
                     case '~':
-                        Console.WriteLine("Tilde is used as separator.");
+                        if (showprogress)
+                            Console.WriteLine("Tilde is used as separator.");
                         sep_name = "tilde";
                         break;
                     case '^':
-                        Console.WriteLine("Caret is used as separator.");
+                        if (showprogress)
+                            Console.WriteLine("Caret is used as separator.");
                         sep_name = "caret";
                         break;
                     case ' ':
-                        Console.WriteLine("Space is used as separator.");
+                        if (showprogress)
+                            Console.WriteLine("Space is used as separator.");
                         sep_name = "space";
                         break;
                     default:
-                        Console.WriteLine("'" + sep + "'" + " separator is used.");
+                        if (showprogress)
+                            Console.WriteLine("'" + sep + "'" + " separator is used.");
                         sep_name = sep.ToString();
                         break;
                 }
@@ -479,7 +488,8 @@ namespace csv_to_sql_loader
                     InsertDataIntoSQLServerUsingSQLBulkCopy_2(dt, tabName, flushed_batch_size, connString);
                     dt.Rows.Clear();
                 }
-                Console.WriteLine(rowsCount + " records imported");
+                if (showprogress)
+                    Console.WriteLine(rowsCount + " records imported");
             }
             catch (Exception ex)
             {
