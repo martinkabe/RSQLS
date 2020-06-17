@@ -110,11 +110,11 @@ push_data <- function(connectionString
     return("Try it again")
   }
   if (dim(df)[1] < 1) {
-    if (show_progress) {
+    if (showprogress) {
       print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", " No inserted record into table ", sqltabname, sep = ""))
     }
   } else {
-    if (show_progress) {
+    if (showprogress) {
       print(paste("Data Frame has ", dim(df)[1], " rows and ", dim(df)[2], " columns.", sep = ""))
     }
     # sqltabname <- gsub("\\[|\\]", "", sqltabname)
